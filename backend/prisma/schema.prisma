@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Admin {
+  id                          String   @id @default(uuid())
+  name                        String
+  email                       String   @unique
+  password                    String
+  role                        String   @default("admin")
+  theme                       String   @default("light")
+  paymentEnabled              Boolean  @default(true)
+  achievementsEnabled         Boolean  @default(true)
+  collectorRegistrationEnabled Boolean  @default(true)
+  createdAt                   DateTime @default(now())
+}
+
+model Collector {
+  id                 String       @id @default(uuid())
+  name               String
+  email              String?      @unique
+  password           String?
+  phone              String?
+  address            String?
+  profilePicture     String?
+  bio                String?
+  isPendingExhibitor Boolean      @default(false)
+  theme              String       @default("light")
+  createdAt          DateTime     @default(now())
+  soldArtworks       SoldArtwork[]
+  messagesSent       Message[]    @relation("CollectorMessages")
+}
+
+model Exhibitor {
+  id                  String              @id @default(uuid())
+  name                String
+  email               String?             @unique
+  password            String?
+  phone               String?
+  address             String?
+  profilePicture      String?
+  bio                 String?
+  theme               String              @default("light")
+  createdAt           DateTime            @default(now())
+  artworks            Artwork[]
+  contributedArtworks ArtworkContributor[]
+  achievements        Achievement[]
+  payments           Payment[]
+  messagesReceived    Message[]           @relation("ExhibitorMessages")
+}
+
+model Artwork {
+  id           String              @id @default(uuid())
+  title        String
+  type         String              // "painting", "sculpture", "photography", "digital_art", "mixed_media", "installation", "print", "other"
+  yearCreated  Int?
+  style        String?
+  description  String?
+  price        Float?
+  status       String              @default("Available")
+  imageUrl     String?
+  media        Json                 @default("[]")
+  attributes   Json?               // type-specific fields: {medium, canvasType, material, height, width, depth, weight, etc.}
+  createdAt    DateTime            @default(now())
+  exhibitorId  String?
+  exhibitor    Exhibitor?          @relation(fields: [exhibitorId], references: [id])
+  contributors ArtworkContributor[]
+  sales        SoldArtwork[]
+  payments     Payment[]
+}
+
+model ArtworkContributor {
+  artworkId   String
+  exhibitorId String
+  artwork     Artwork   @relation(fields: [artworkId], references: [id], onDelete: Cascade)
+  exhibitor   Exhibitor @relation(fields: [exhibitorId], references: [id])
+
+  @@id([artworkId, exhibitorId])
+}
+
+model SoldArtwork {
+  id           String    @id @default(uuid())
+  collectorId  String?
+  collector    Collector? @relation(fields: [collectorId], references: [id], onDelete: SetNull)
+  artworkId    String
+  artwork      Artwork   @relation(fields: [artworkId], references: [id])
+  artworkTitle String
+  salePrice    Float
+  saleDate     DateTime  @default(now())
+  notes        String?
+  createdAt    DateTime  @default(now())
+}
+
+model Achievement {
+  id            String    @id @default(uuid())
+  title         String
+  description   String?
+  year          Int?
+  proofImageUrl String?
+  proofLink     String?
+  isVerified    Boolean   @default(false)
+  exhibitor     Exhibitor @relation(fields: [exhibitorId], references: [id])
+  exhibitorId   String
+  createdAt     DateTime  @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  target    String   // "all" | "collectors" | "exhibitors" | "user"
+  userId    String?  // specific user if target is "user"
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model Payment {
+  id                 String    @id @default(uuid())
+  exhibitorId        String?
+  artworkId          String?
+  amount             Float     @default(5)
+  status             String    @default("pending") // pending | paid | failed
+  paymongoCheckoutId String?
+  paymongoPaymentId  String?
+  checkoutUrl        String?
+  createdAt          DateTime  @default(now())
+  paidAt             DateTime?
+
+  exhibitor Exhibitor? @relation(fields: [exhibitorId], references: [id])
+  artwork   Artwork?   @relation(fields: [artworkId], references: [id])
+
+  @@index([exhibitorId])
+  @@index([artworkId])
+  @@index([status])
+}
+
+model Message {
+  id          String    @id @default(uuid())
+  content     String
+  senderRole  String    // "collector" | "exhibitor"
+  exhibitorId String
+  exhibitor   Exhibitor @relation("ExhibitorMessages", fields: [exhibitorId], references: [id])
+  collectorId String
+  collector   Collector @relation("CollectorMessages", fields: [collectorId], references: [id])
+  artworkId   String?
+  artworkType String?
+  createdAt   DateTime  @default(now())
+}
+
+model Report {
+  id          String   @id @default(uuid())
+  userId      String
+  userRole    String   // "collector" | "exhibitor"
+  subject     String
+  message     String
+  status      String   @default("pending") // "pending" | "reviewed" | "resolved"
+  createdAt   DateTime @default(now())
+  resolvedAt  DateTime?
+}
