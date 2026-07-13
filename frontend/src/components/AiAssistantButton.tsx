@@ -6,7 +6,7 @@ interface AiAssistantButtonProps {
   onSignIn?: () => void;
 }
 
-export default function AiAssistantButton({ token, onSignIn }: AiAssistantButtonProps) {
+export default function AiAssistantButton({ token }: AiAssistantButtonProps) {
   const [open, setOpen] = useState(false);
   const [aiPos, setAiPos] = useState({ right: 24, bottom: 80 });
   const aiDragRef = useRef<{ startX: number; startY: number; startLeft: number; startTop: number; el: HTMLElement | null }>({ startX: 0, startY: 0, startLeft: 0, startTop: 0, el: null });

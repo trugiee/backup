@@ -84,7 +84,7 @@ export default function AuthPage({ onAuth }: AuthPageProps) {
     e.preventDefault();
     setForgotLoading(true);
     try {
-      const data = await forgotPassword(forgotEmail);
+      await forgotPassword(forgotEmail);
       setForgotSent(true);
     } catch {
       setError('Failed to send reset email. Please try again.');

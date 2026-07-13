@@ -5,7 +5,10 @@
   "main": "src/index.ts",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed.ts",
+    "build:frontend": "cd ../frontend && npm ci && npm run build",
+    "build": "npm run build:frontend && npx prisma generate && npx tsc && cp -r ../frontend/dist dist/src/public",
+    "start": "node dist/src/index.js"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
