@@ -9,7 +9,7 @@ router.post('/upload', authMiddleware, upload.single('image'), (req: Request, re
     res.status(400).json({ error: 'No image file uploaded' });
     return;
   }
-  const imageUrl = `/uploads/${req.file.filename}`;
+  const imageUrl = req.file.path; // Cloudinary CDN URL
   res.status(201).json({ imageUrl });
 });
 
