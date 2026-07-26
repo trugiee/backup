@@ -87,7 +87,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
             )}
             <a
               href="/ggallery.apk"
-              download
+              download="ggallery.apk"
               className="border border-zinc-600 text-zinc-300 font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl hover:bg-zinc-800 hover:text-white transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base inline-block"
             >
               Download App
