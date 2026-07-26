@@ -70,7 +70,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
           <p className="text-zinc-400 text-sm sm:text-lg max-w-xl leading-relaxed mb-6 sm:mb-10">
             Browse our curated collection of original artworks from talented exhibitors.
           </p>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onSignIn}
               className="bg-white text-zinc-900 font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl hover:bg-zinc-100 transition-all duration-200 hover:-translate-y-0.5 shadow-lg text-sm sm:text-base"
