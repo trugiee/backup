@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import type { Artwork } from '../types';
 import { fetchPublicArtworks } from '../api';
 import ArtworkGallery from '../components/ArtworkGallery';
+import { Capacitor } from '@capacitor/core';
 
 export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
@@ -85,13 +86,15 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
                 Install App
               </button>
             )}
-            <a
-              href="/ggallery.apk"
-              download="ggallery.apk"
-              className="border border-zinc-600 text-zinc-300 font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl hover:bg-zinc-800 hover:text-white transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base inline-block"
-            >
-              Download App
-            </a>
+            {!Capacitor.isNativePlatform() && (
+              <a
+                href="/ggallery.apk"
+                download="ggallery.apk"
+                className="border border-zinc-600 text-zinc-300 font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl hover:bg-zinc-800 hover:text-white transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base inline-block"
+              >
+                Download App
+              </a>
+            )}
           </div>
         </div>
       </div>
