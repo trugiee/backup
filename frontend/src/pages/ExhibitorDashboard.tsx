@@ -17,6 +17,7 @@ import CollectorProfileModal from '../components/CollectorProfileModal';
 import FilterBar from '../components/FilterBar';
 import Sidebar from '../components/Sidebar';
 import SettingsModal from '../components/SettingsModal';
+import { io } from 'socket.io-client';
 
 interface ExhibitorDashboardProps {
   token: string;
@@ -151,6 +152,28 @@ export default function ExhibitorDashboard({
   useEffect(() => {
     fetchDashboardData();
     loadInbox();
+    
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:3001');
+    socket.emit('join', user.id);
+    
+    socket.on('newMessage', (msg: Message) => {
+      // Reload inbox to update the unread count and latest message preview
+      loadInbox();
+      
+      // If the user has a thread open with this specific collector, append the new message instantly
+      setActiveThread((prev) => {
+        if (!prev) return prev;
+        if (prev.collector.id === msg.collectorId) {
+           if (prev.messages.find((m: Message) => m.id === msg.id)) return prev;
+           return { ...prev, messages: [...prev.messages, msg] };
+        }
+        return prev;
+      });
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {

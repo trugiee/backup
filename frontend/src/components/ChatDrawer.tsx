@@ -3,6 +3,7 @@ import type { Message, User } from '../types';
 import { sendMessage, fetchConversation } from '../api';
 import ExhibitorProfileView from './ExhibitorProfileView';
 import ChatThreadView from './ChatThreadView';
+import { io } from 'socket.io-client';
 
 interface ChatDrawerProps {
   token: string;
@@ -45,9 +46,26 @@ export default function ChatDrawer({
 
   useEffect(() => {
     load();
-    const interval = setInterval(load, 5000);
-    return () => clearInterval(interval);
-  }, [exhibitorId]);
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:3001');
+    socket.emit('join', user.id);
+    
+    socket.on('newMessage', (msg: Message) => {
+      // Only append if it belongs to this conversation
+      if (
+        (msg.exhibitorId === exhibitorId && msg.collectorId === user.id) || 
+        (msg.collectorId === exhibitorId && msg.exhibitorId === user.id)
+      ) {
+        setMessages(prev => {
+          if (prev.find(m => m.id === msg.id)) return prev;
+          return [...prev, msg];
+        });
+      }
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [exhibitorId, user.id]);
 
   const handleSend = async (content: string) => {
     const msg = await sendMessage(token, {

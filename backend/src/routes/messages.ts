@@ -64,6 +64,11 @@ router.post('/messages', async (req: Request, res: Response) => {
     });
 
     const [populated] = await populateArtworks([message]);
+    const io = req.app.get('io');
+    if (io) {
+      io.to(exhibitorId).emit('newMessage', populated);
+      io.to(collectorId).emit('newMessage', populated);
+    }
     res.status(201).json(populated);
   } catch (err) {
     console.error(err);
@@ -94,6 +99,11 @@ router.post('/messages/reply', async (req: Request, res: Response) => {
     });
     
     const [populated] = await populateArtworks([message]);
+    const io = req.app.get('io');
+    if (io) {
+      io.to(collectorId).emit('newMessage', populated);
+      io.to(user.id).emit('newMessage', populated);
+    }
     res.status(201).json(populated);
   } catch (err) {
     console.error(err);

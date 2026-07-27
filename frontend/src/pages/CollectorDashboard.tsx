@@ -15,6 +15,7 @@ import ChatDrawer from '../components/ChatDrawer';
 import Sidebar from '../components/Sidebar';
 import SettingsModal from '../components/SettingsModal';
 import ArtworkGallery from '../components/ArtworkGallery';
+import { io } from 'socket.io-client';
 
 interface CollectorDashboardProps {
   user: User;
@@ -109,8 +110,18 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
   useEffect(() => {
     fetchAllData();
     loadConversations();
-    const interval = setInterval(loadConversations, 5000);
-    return () => clearInterval(interval);
+    
+    const socket = io(import.meta.env.VITE_API_URL || 'http://localhost:3001');
+    socket.emit('join', user.id);
+    
+    socket.on('newMessage', () => {
+      // Refresh conversation list on new message
+      loadConversations();
+    });
+
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
