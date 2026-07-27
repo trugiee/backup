@@ -7,38 +7,12 @@ import { Capacitor } from '@capacitor/core';
 export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [loading, setLoading] = useState(true);
-  const [installPrompt, setInstallPrompt] = useState<Event | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-
   useEffect(() => {
     fetchPublicArtworks()
       .then((data) => setArtworks(Array.isArray(data.artworks) ? data.artworks : []))
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
-
-  useEffect(() => {
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-      return;
-    }
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setInstallPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
-  const handleInstall = async () => {
-    if (!installPrompt) return;
-    (installPrompt as any).prompt();
-    const result = await (installPrompt as any).userChoice;
-    if (result.outcome === 'accepted') {
-      setInstallPrompt(null);
-      setIsInstalled(true);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-zinc-50 font-sans">
@@ -78,14 +52,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
             >
               Sign In
             </button>
-            {!isInstalled && installPrompt && (
-              <button
-                onClick={handleInstall}
-                className="border border-zinc-600 text-zinc-300 font-bold px-5 sm:px-7 py-2.5 sm:py-3.5 rounded-lg sm:rounded-xl hover:bg-zinc-800 hover:text-white transition-all duration-200 hover:-translate-y-0.5 text-sm sm:text-base"
-              >
-                Install App
-              </button>
-            )}
+
             {!Capacitor.isNativePlatform() && (
               <a
                 href="/ggallery.apk"
