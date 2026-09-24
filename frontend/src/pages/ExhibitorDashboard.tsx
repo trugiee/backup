@@ -420,28 +420,34 @@ export default function ExhibitorDashboard({
 
       {dashboardTab === 'statistics' && (
         <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-          <div className="bg-zinc-950 rounded-2xl px-5 sm:px-8 py-5 sm:py-6 mb-6">
-            <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-white mb-4">Statistics</h1>
+          <div className="bg-zinc-950 rounded-3xl px-6 sm:px-10 py-7 sm:py-10 mb-6 relative overflow-hidden">
+            <div className="pointer-events-none absolute -top-20 -right-16 w-44 h-44 rounded-full bg-white/[0.05] blur-2xl" />
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-5">
-              <div className="col-span-2">
-                <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest">Total Artworks</p>
-                <p className="text-2xl sm:text-3xl font-bold mt-1 text-white">{stats?.total ?? artworks.length}</p>
+            <div className="relative">
+              <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Statistics</p>
+
+              <div className="mt-5">
+                <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Total Artworks</p>
+                <p className="mt-1 text-5xl sm:text-6xl font-light tracking-tighter text-white">{stats?.total ?? artworks.length}</p>
               </div>
 
-              <div>
-                <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest">Available</p>
-                <p className="text-xl sm:text-2xl font-bold mt-1 text-emerald-400">{artworks.filter(a => a.status === 'Available').length}</p>
+              <div className="mt-6 pt-6 border-t border-white/10 grid grid-cols-2 gap-6">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Available</p>
+                  <p className="mt-1 text-3xl sm:text-4xl font-light text-emerald-400">{artworks.filter(a => a.status === 'Available').length}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Sold</p>
+                  <p className="mt-1 text-3xl sm:text-4xl font-light text-blue-400">{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}</p>
+                </div>
               </div>
 
-              <div>
-                <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest">Sold</p>
-                <p className="text-xl sm:text-2xl font-bold mt-1 text-blue-400">{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}</p>
-              </div>
-
-              <div className="col-span-2 lg:col-span-4">
-                <p className="text-[11px] font-semibold text-zinc-400 uppercase tracking-widest">Total Sales</p>
-                <p className="text-2xl sm:text-3xl font-bold mt-1 text-white">{stats ? `₱${stats.sales.total.toLocaleString()}` : '—'}</p>
+              <div className="mt-6 pt-6 border-t border-white/10 flex items-end justify-between">
+                <div>
+                  <p className="text-[10px] font-medium uppercase tracking-[0.3em] text-zinc-400">Total Sales</p>
+                  <p className="mt-1 text-3xl sm:text-4xl font-light tracking-tight text-white">{stats ? `₱${stats.sales.total.toLocaleString()}` : '—'}</p>
+                </div>
+                <div className="w-3 h-3 rounded-full bg-white/25 mb-1.5" />
               </div>
             </div>
           </div>
