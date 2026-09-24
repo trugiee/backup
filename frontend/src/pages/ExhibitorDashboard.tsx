@@ -433,7 +433,7 @@ export default function ExhibitorDashboard({
             {/* Row 1: Hero cards side by side */}
             <div className="grid grid-cols-2 gap-2 mb-2">
               {/* Hero 1: Total Sales */}
-              <div className="bg-gradient-to-br from-zinc-900/95 via-zinc-950 to-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
+              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
                 <div className="pointer-events-none absolute -top-8 -right-8 w-20 h-20 rounded-full bg-white/[0.03] blur-xl" />
                 <span className="pointer-events-none absolute -right-1 -bottom-2 text-4xl font-extralight text-white/[0.03] select-none font-mono">₱</span>
                 <div className="relative z-10">
@@ -455,7 +455,7 @@ export default function ExhibitorDashboard({
               </div>
 
               {/* Hero 2: Achievements */}
-              <div className="bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
+              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
                 <div className="relative z-10">
                   <div className="flex items-center gap-1 mb-0.5">
                     <svg className="w-2.5 h-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
@@ -475,7 +475,7 @@ export default function ExhibitorDashboard({
             {/* Row 2: Four small stat chips */}
             <div className="grid grid-cols-4 gap-2">
               {/* Artworks */}
-              <div className="bg-gradient-to-b from-zinc-900/60 to-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
+              <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[7px] font-mono uppercase tracking-[0.15em] text-zinc-500">Artworks</span>
                   <svg className="w-2 h-2 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="1.5"/><circle cx="8.5" cy="8.5" r="1.5" strokeWidth="1.5"/><path d="M21 15l-5-5L5 21" strokeWidth="1.5"/></svg>
@@ -485,7 +485,7 @@ export default function ExhibitorDashboard({
               </div>
 
               {/* Available */}
-              <div className="bg-gradient-to-b from-zinc-900/60 to-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
+              <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[7px] font-mono uppercase tracking-[0.15em] text-zinc-500">Available</span>
                   <svg className="w-2 h-2 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
@@ -495,7 +495,7 @@ export default function ExhibitorDashboard({
               </div>
 
               {/* Sold */}
-              <div className="bg-gradient-to-b from-zinc-900/60 to-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
+              <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[7px] font-mono uppercase tracking-[0.15em] text-zinc-500">Sold</span>
                   <svg className="w-2 h-2 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M5 13l4 4L19 7" /></svg>
@@ -505,7 +505,7 @@ export default function ExhibitorDashboard({
               </div>
 
               {/* Avg Price */}
-              <div className="bg-gradient-to-b from-zinc-900/60 to-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
+              <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
                 <div className="flex items-center justify-between mb-1">
                   <span className="text-[7px] font-mono uppercase tracking-[0.15em] text-zinc-500">Avg.</span>
                   <span className="text-[7px] text-zinc-600 font-mono">₱</span>
