@@ -7,12 +7,32 @@ import { Capacitor } from '@capacitor/core';
 export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+
+  const PAGE_SIZE = 24;
+
+  const loadPage = async (skip: number, append: boolean) => {
+    const data = await fetchPublicArtworks({ take: PAGE_SIZE, skip });
+    setArtworks(prev => (append ? [...prev, ...data.artworks] : data.artworks));
+    setHasMore(data.hasMore);
+  };
+
   useEffect(() => {
-    fetchPublicArtworks()
-      .then((data) => setArtworks(Array.isArray(data.artworks) ? data.artworks : []))
+    loadPage(0, false)
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  const onLoadMore = async () => {
+    setLoadingMore(true);
+    try {
+      await loadPage(artworks.length, true);
+    } catch {
+    } finally {
+      setLoadingMore(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-zinc-50 font-sans">
@@ -66,7 +86,14 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
         </div>
       </div>
 
-      <ArtworkGallery artworks={artworks} loading={loading} onSignIn={onSignIn} />
+      <ArtworkGallery
+        artworks={artworks}
+        loading={loading}
+        loadingMore={loadingMore}
+        hasMore={hasMore}
+        onLoadMore={onLoadMore}
+        onSignIn={onSignIn}
+      />
 
       <footer className="border-t border-zinc-200 bg-white mt-12 sm:mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-10 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3">

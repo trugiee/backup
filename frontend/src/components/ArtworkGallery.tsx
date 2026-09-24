@@ -10,9 +10,27 @@ interface ArtworkGalleryProps {
   token?: string;
   user?: User;
   onSignIn?: () => void;
+  hasMore?: boolean;
+  loadingMore?: boolean;
+  onLoadMore?: () => void;
 }
 
-export default function ArtworkGallery({ artworks, loading, token, user, onSignIn }: ArtworkGalleryProps) {
+function SkeletonCard() {
+  return (
+    <div
+      className="rounded-lg overflow-hidden border border-zinc-100 dark:border-zinc-800 flex flex-col"
+      style={{ aspectRatio: '5/7' }}
+    >
+      <div className="flex-1 bg-zinc-100 dark:bg-zinc-800 animate-pulse" style={{ flex: '9' }} />
+      <div className="px-2.5 py-3 space-y-1.5" style={{ flex: '1' }}>
+        <div className="h-2.5 w-3/4 rounded bg-zinc-100 dark:bg-zinc-800 animate-pulse" />
+        <div className="h-2 w-1/2 rounded bg-zinc-100 dark:bg-zinc-800 animate-pulse" />
+      </div>
+    </div>
+  );
+}
+
+export default function ArtworkGallery({ artworks, loading, token, user, onSignIn, hasMore, loadingMore, onLoadMore }: ArtworkGalleryProps) {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selected, setSelected] = useState<Artwork | null>(null);
@@ -46,9 +64,8 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
 
       <main className="max-w-full mx-auto px-4 sm:px-10 py-8 sm:py-12">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-40 text-zinc-400">
-            <div className="w-10 h-10 border-2 border-zinc-300 border-t-zinc-800 rounded-full animate-spin mb-4" />
-            <p className="text-sm">Loading artworks...</p>
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6" aria-hidden="true">
+            {Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)}
           </div>
         ) : displayed.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-40 text-zinc-400">
@@ -67,6 +84,21 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
                 onClick={() => setSelected(artwork)}
               />
             ))}
+          </div>
+        )}
+
+        {!loading && hasMore && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={onLoadMore}
+              disabled={loadingMore}
+              className="flex items-center gap-2 text-sm font-semibold bg-zinc-900 text-white px-6 py-2.5 rounded-xl hover:bg-zinc-800 active:scale-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {loadingMore && (
+                <div className="w-4 h-4 border-2 border-zinc-400 border-t-transparent rounded-full animate-spin" />
+              )}
+              {loadingMore ? 'Loading...' : 'Load More'}
+            </button>
           </div>
         )}
       </main>

@@ -22,6 +22,8 @@ export default function ArtworkCard({ artwork, onClick }: { artwork: Artwork; on
               <img
                 src={thumb.url}
                 alt={artwork.title}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
                 onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
               />
@@ -37,6 +39,8 @@ export default function ArtworkCard({ artwork, onClick }: { artwork: Artwork; on
             <img
               src={thumb.url}
               alt={artwork.title}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500 ease-out"
             />
           )

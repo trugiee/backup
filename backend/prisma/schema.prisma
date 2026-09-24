@@ -73,6 +73,8 @@ model Artwork {
   contributors ArtworkContributor[]
   payments     Payment[]
   sales        SoldArtwork[]
+
+  @@index([status, createdAt(sort: Desc)])
 }
 
 model ArtworkContributor {

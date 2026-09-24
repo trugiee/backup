@@ -13,8 +13,18 @@ export function getAuthHeaders(token: string): HeadersInit {
   return { Authorization: `Bearer ${token}` };
 }
 
-export function fetchPublicArtworks(): Promise<{ artworks: Artwork[] }> {
-  return fetchJson(`${BASE}/public/artworks`);
+export interface PublicArtworksResponse {
+  artworks: Artwork[];
+  total: number;
+  hasMore: boolean;
+}
+
+export function fetchPublicArtworks(params?: { take?: number; skip?: number }): Promise<PublicArtworksResponse> {
+  const query = new URLSearchParams();
+  if (params?.take) query.set('take', String(params.take));
+  if (params?.skip) query.set('skip', String(params.skip));
+  const qs = query.toString();
+  return fetchJson(`${BASE}/public/artworks${qs ? `?${qs}` : ''}`);
 }
 
 export function login(email: string, password: string): Promise<{ token: string; user: User }> {
