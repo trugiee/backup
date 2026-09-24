@@ -508,43 +508,6 @@ export default function ExhibitorDashboard({
               )}
             </div>
           </div>
-
-          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-            <h2 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-3 uppercase tracking-wider">Type Breakdown</h2>
-            {types.length === 0 ? (
-              <p className="text-sm text-zinc-400">No artworks yet.</p>
-            ) : (
-              <div className="space-y-2.5">
-                {types.map(t => {
-                  const total = artworks.filter(a => a.type === t).length;
-                  const available = artworks.filter(a => a.type === t && a.status === 'Available').length;
-                  const sold = artworks.filter(a => a.type === t && a.status === 'Sold').length;
-                  return (
-                    <div key={t}>
-                      <div className="flex items-center justify-between text-sm mb-1">
-                        <span className="font-medium text-zinc-700 dark:text-zinc-300 capitalize">{t.replace(/_/g, ' ')}</span>
-                        <span className="text-zinc-400 text-xs">{total}</span>
-                      </div>
-                      <div className="w-full h-1.5 bg-zinc-100 dark:bg-zinc-800 rounded-full overflow-hidden flex">
-                        <div
-                          className="h-full bg-emerald-500 rounded-full transition-all"
-                          style={{ width: `${total ? (available / total) * 100 : 0}%` }}
-                        />
-                        <div
-                          className="h-full bg-blue-500 rounded-full transition-all"
-                          style={{ width: `${total ? (sold / total) * 100 : 0}%` }}
-                        />
-                      </div>
-                      <div className="flex gap-4 mt-0.5">
-                        <span className="text-[10px] text-emerald-600">Available: {available}</span>
-                        <span className="text-[10px] text-blue-600">Sold: {sold}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
         </div>
       )}
 
