@@ -246,7 +246,7 @@ export default function ExhibitorDashboard({
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans pb-20 sm:pb-0 sm:flex">
+    <div className="min-h-screen bg-black font-sans pb-20 sm:pb-0 sm:flex">
       <Sidebar
         tabs={exhibitorTabs}
         activeTab={dashboardTab}
@@ -523,8 +523,8 @@ export default function ExhibitorDashboard({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-              <h2 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-3 uppercase tracking-wider">By Status</h2>
+            <div className="bg-black border border-white/10 rounded-xl p-5">
+              <h2 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">By Status</h2>
               {artworks.length === 0 ? (
                 <p className="text-sm text-zinc-400">No artworks yet.</p>
               ) : (
@@ -545,49 +545,49 @@ export default function ExhibitorDashboard({
               )}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-              <h2 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-3 uppercase tracking-wider">By Type</h2>
+            <div className="bg-black border border-white/10 rounded-xl p-5">
+              <h2 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">By Type</h2>
               {(stats?.byType ?? []).length === 0 ? (
                 <p className="text-sm text-zinc-400">No artworks yet.</p>
               ) : (
                 <ResponsiveContainer width="100%" height={240}>
                   <BarChart data={(stats?.byType ?? []).map(t => ({ name: t.type.replace(/_/g, ' '), count: t._count }))}>
-                    <XAxis dataKey="name" tick={{ fontSize: 10 }} interval={0} angle={-20} textAnchor="end" height={50} />
-                    <YAxis tick={{ fontSize: 10 }} />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#18181b" radius={[4, 4, 0, 0]} />
+                    <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#71717a' }} interval={0} angle={-20} textAnchor="end" height={50} axisLine={{ stroke: '#27272a' }} tickLine={false} />
+                    <YAxis tick={{ fontSize: 10, fill: '#71717a' }} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{ background: '#09090b', border: '1px solid #27272a', color: '#fff', fontSize: 11 }} />
+                    <Bar dataKey="count" fill="#ffffff" radius={[4, 4, 0, 0]} opacity={0.85} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-              <h2 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-3 uppercase tracking-wider">Artworks Created</h2>
+            <div className="bg-black border border-white/10 rounded-xl p-5">
+              <h2 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">Artworks Created</h2>
               {(stats?.artworksByMonth ?? []).length === 0 || (stats?.artworksByMonth ?? []).every(m => m.count === 0) ? (
                 <p className="text-sm text-zinc-400">No data yet.</p>
               ) : (
                 <ResponsiveContainer width="100%" height={240}>
                   <BarChart data={stats?.artworksByMonth ?? []}>
-                    <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                    <YAxis tick={{ fontSize: 10 }} />
-                    <Tooltip />
-                    <Bar dataKey="count" fill="#18181b" radius={[4, 4, 0, 0]} />
+                    <XAxis dataKey="month" tick={{ fontSize: 10, fill: '#71717a' }} axisLine={{ stroke: '#27272a' }} tickLine={false} />
+                    <YAxis tick={{ fontSize: 10, fill: '#71717a' }} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{ background: '#09090b', border: '1px solid #27272a', color: '#fff', fontSize: 11 }} />
+                    <Bar dataKey="count" fill="#ffffff" radius={[4, 4, 0, 0]} opacity={0.85} />
                   </BarChart>
                 </ResponsiveContainer>
               )}
             </div>
 
-            <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl p-5">
-              <h2 className="text-sm font-bold text-zinc-800 dark:text-zinc-200 mb-3 uppercase tracking-wider">Sales Over Time</h2>
+            <div className="bg-black border border-white/10 rounded-xl p-5">
+              <h2 className="text-sm font-bold text-white mb-3 uppercase tracking-wider">Sales Over Time</h2>
               {(stats?.sales.byMonth ?? []).length === 0 || (stats?.sales.byMonth ?? []).every(m => m.sales === 0) ? (
                 <p className="text-sm text-zinc-400">No sales yet.</p>
               ) : (
                 <ResponsiveContainer width="100%" height={240}>
                   <LineChart data={stats?.sales.byMonth ?? []}>
-                    <XAxis dataKey="month" tick={{ fontSize: 10 }} />
-                    <YAxis tick={{ fontSize: 10 }} />
-                    <Tooltip formatter={(v) => [`₱${Number(v).toLocaleString()}`, 'Sales']} />
-                    <Line type="monotone" dataKey="sales" stroke="#18181b" strokeWidth={1.5} dot={false} />
+                    <XAxis dataKey="month" tick={{ fontSize: 10, fill: '#71717a' }} axisLine={{ stroke: '#27272a' }} tickLine={false} />
+                    <YAxis tick={{ fontSize: 10, fill: '#71717a' }} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{ background: '#09090b', border: '1px solid #27272a', color: '#fff', fontSize: 11 }} formatter={(v) => [`₱${Number(v).toLocaleString()}`, 'Sales']} />
+                    <Line type="monotone" dataKey="sales" stroke="#ffffff" strokeWidth={1.5} dot={false} />
                   </LineChart>
                 </ResponsiveContainer>
               )}
