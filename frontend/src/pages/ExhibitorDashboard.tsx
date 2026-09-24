@@ -420,54 +420,86 @@ export default function ExhibitorDashboard({
 
       {dashboardTab === 'statistics' && (
         <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-          {/* Modern Space-Saving Statistics Ribbon */}
-          <div className="relative overflow-hidden bg-zinc-950 border border-zinc-800/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-xl">
-            <div className="pointer-events-none absolute -top-12 -right-10 w-40 h-40 rounded-full bg-white/[0.04] blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-10 left-1/4 w-40 h-40 rounded-full bg-white/[0.02] blur-2xl" />
+          {/* Asymmetric Space-Saving Black & White Bento Grid */}
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-zinc-400">Statistics</p>
+            </div>
 
-            <div className="relative">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-zinc-400 mb-4">
-                Statistics
-              </p>
-
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08]">
-                {/* Total Artworks */}
-                <div className="pt-2 sm:pt-0 sm:pr-4 first:pl-0">
-                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Artworks</p>
-                  <p className="mt-1 text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tight text-white">
-                    {stats?.total ?? artworks.length}
-                  </p>
-                  <p className="text-[10px] text-zinc-400 mt-1">all pieces</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+              {/* Box 1: HERO - Total Sales (Spans 2 columns, BIGGER than others) */}
+              <div className="col-span-2 bg-black border border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:border-white/40 transition-all shadow-lg">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-white/60">Total Sales</span>
+                  <span className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full text-white/50">REVENUE</span>
                 </div>
-
-                {/* Available */}
-                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
-                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Available</p>
-                  <p className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
-                    {artworks.filter(a => a.status === 'Available').length}
-                  </p>
-                  <p className="text-[10px] text-zinc-400 mt-1">ready to sell</p>
+                <div className="my-2.5 flex items-baseline">
+                  <span className="text-lg sm:text-xl font-light text-white/50 mr-1">₱</span>
+                  <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tighter text-white">
+                    {stats ? stats.sales.total.toLocaleString() : '0'}
+                  </span>
                 </div>
-
-                {/* Sold */}
-                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
-                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Sold</p>
-                  <p className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
-                    {stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}
-                  </p>
-                  <p className="text-[10px] text-zinc-400 mt-1">completed</p>
+                <div className="flex items-center justify-between text-[11px] text-white/40 border-t border-white/10 pt-2.5">
+                  <span>Total collected revenue</span>
+                  <span>{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length} transactions</span>
                 </div>
+              </div>
 
-                {/* Total Sales */}
-                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
-                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Sales</p>
-                  <div className="mt-1 flex items-baseline">
-                    <span className="text-base sm:text-lg font-light text-zinc-400 mr-1">₱</span>
-                    <span className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
-                      {stats ? stats.sales.total.toLocaleString() : '0'}
-                    </span>
-                  </div>
-                  <p className="text-[10px] text-zinc-400 mt-1">total revenue</p>
+              {/* Box 2: Total Artworks */}
+              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Total Artworks</span>
+                <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
+                  {stats?.total ?? artworks.length}
+                </p>
+                <span className="text-[10px] text-white/40">Portfolio pieces</span>
+              </div>
+
+              {/* Box 3: Available */}
+              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Available</span>
+                <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
+                  {artworks.filter(a => a.status === 'Available').length}
+                </p>
+                <span className="text-[10px] text-white/40">Ready to sell</span>
+              </div>
+
+              {/* Box 4: Sold */}
+              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Sold</span>
+                <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
+                  {stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}
+                </p>
+                <span className="text-[10px] text-white/40">Completed</span>
+              </div>
+
+              {/* Box 5: Avg. Price */}
+              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Avg. Price</span>
+                <p className="my-1.5 text-xl sm:text-2xl font-light tracking-tight text-white truncate">
+                  {(stats?.sales?.averagePrice && stats.sales.averagePrice > 0)
+                    ? `₱${Math.round(stats.sales.averagePrice).toLocaleString()}`
+                    : artworks.some(a => (a.price ?? 0) > 0)
+                      ? `₱${Math.round(artworks.filter(a => (a.price ?? 0) > 0).reduce((s, a) => s + (a.price ?? 0), 0) / artworks.filter(a => (a.price ?? 0) > 0).length).toLocaleString()}`
+                      : '—'}
+                </p>
+                <span className="text-[10px] text-white/40">Per piece</span>
+              </div>
+
+              {/* Box 6: Achievements (Double Width to balance Bento grid) */}
+              <div className="col-span-2 bg-black border border-white/15 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/35 transition-all shadow-sm">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-white/60">Achievements</span>
+                  <span className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full text-white/50">MILESTONES</span>
+                </div>
+                <div className="my-1.5 flex items-baseline gap-2">
+                  <span className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
+                    {stats?.achievements ?? achievements.length}
+                  </span>
+                  <span className="text-xs text-white/40">verified milestones</span>
+                </div>
+                <div className="flex items-center justify-between text-[11px] text-white/40 border-t border-white/10 pt-2.5">
+                  <span>Exhibitor honors & badges</span>
+                  <span>{achievements.filter(a => a.isVerified).length} verified</span>
                 </div>
               </div>
             </div>
