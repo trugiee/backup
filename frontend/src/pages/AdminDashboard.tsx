@@ -190,7 +190,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans pb-20 md:pb-0 lg:ml-16">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans pb-20 md:pb-0 lg:flex">
       <Sidebar
         tabs={adminTabs}
         activeTab={activeTab}
@@ -200,6 +200,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
       />
 
 
+      <div className="flex-1 min-w-0">
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center min-w-0">
@@ -717,6 +718,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
       {showSettings && (
         <SettingsModal user={user} token={token} setUser={setUser} onClose={() => setShowSettings(false)} />
       )}
+      </div>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
   return (
     <>
       <div className="sticky top-0 z-30 bg-white backdrop-blur-md border-b border-zinc-100">
-        <div className="px-4 sm:px-10 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="px-4 sm:px-10 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 w-full max-w-full lg:max-w-7xl mx-auto">
           <div className="w-full overflow-x-auto whitespace-nowrap scrollbar-none">
             <FilterBar items={filterItems} selected={filterType} onChange={setFilterType} />
           </div>
@@ -62,7 +62,7 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
         </div>
       </div>
 
-      <main className="max-w-full mx-auto px-4 sm:px-10 py-8 sm:py-12">
+      <main className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-10 py-8 sm:py-12">
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6" aria-hidden="true">
             {Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)}

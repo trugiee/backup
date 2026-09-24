@@ -50,7 +50,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
           aria-hidden="true"
           className="absolute right-0 top-1/2 -translate-y-1/2 w-72 sm:w-96 md:w-[28rem] lg:w-[36rem] opacity-[0.04] pointer-events-none select-none object-contain"
         />
-        <div className="relative px-4 sm:px-10 py-16 sm:py-32">
+        <div className="relative max-w-full lg:max-w-7xl mx-auto px-4 sm:px-10 py-16 sm:py-32">
           <p className="text-zinc-400 text-[10px] sm:text-sm font-semibold tracking-widest uppercase mb-2 sm:mb-4">
             MUGNA GALLERY
           </p>

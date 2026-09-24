@@ -246,7 +246,7 @@ export default function ExhibitorDashboard({
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans pb-20 sm:pb-0 lg:ml-16">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans pb-20 sm:pb-0 lg:flex">
       <Sidebar
         tabs={exhibitorTabs}
         activeTab={dashboardTab}
@@ -258,7 +258,8 @@ export default function ExhibitorDashboard({
         onSwitchRole={() => setUser({ ...user, role: 'collector' })}
       />
 
-      <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between">
+      <div className="flex-1 min-w-0">
+        <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full max-w-full lg:max-w-7xl mx-auto">
         <div ref={dashboardLabelRef} className="relative">
           <button
             onClick={() => setShowDashboardMenu(!showDashboardMenu)}
@@ -353,7 +354,7 @@ export default function ExhibitorDashboard({
               + Add Artwork
             </button>
           </div>
-          <div className="max-w-full mx-auto px-4 sm:px-6 pb-2 sm:pb-4">
+          <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pb-2 sm:pb-4">
             <FilterBar
               items={[
                 { value: 'all', label: 'All', count: artworks.length },
@@ -364,7 +365,7 @@ export default function ExhibitorDashboard({
             />
           </div>
 
-          <div className="max-w-full mx-auto px-4 sm:px-6 pb-24 sm:pb-12">
+          <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pb-24 sm:pb-12">
             {loading ? (
               <div className="flex items-center justify-center py-16 sm:py-32">
                 <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin" />
@@ -418,7 +419,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'statistics' && (
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-6">Statistics</h1>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
@@ -562,7 +563,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'notifications' && (
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 sm:py-32 text-zinc-400 dark:text-zinc-500">
               <svg className="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -606,7 +607,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'messages' && (
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           {activeThread ? (
             <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-[calc(100vh-180px)] sm:h-[70vh]">
               <div className="flex items-center gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
@@ -842,6 +843,7 @@ export default function ExhibitorDashboard({
           overflow: hidden;
         }
       `}</style>
+      </div>
     </div>
   );
 }

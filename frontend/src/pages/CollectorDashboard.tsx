@@ -168,7 +168,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-20 md:pb-0 lg:ml-16">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-20 md:pb-0 lg:flex">
       <Sidebar
         tabs={collectorTabs}
         activeTab={dashboardTab}
@@ -180,8 +180,9 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
         onSwitchRole={() => setUser({ ...user, role: 'exhibitor' })}
       />
 
+      <div className="flex-1 min-w-0">
       {dashboardTab !== 'browse' && (
-      <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between">
+      <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full max-w-full lg:max-w-5xl mx-auto">
         <div ref={dashboardLabelRef} className="relative">
           <button
             onClick={() => setShowDashboardMenu(!showDashboardMenu)}
@@ -302,7 +303,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {dashboardTab === 'profile' && (
-        <div className="max-w-3xl mx-auto px-3 sm:px-6 py-4 sm:py-10">
+        <div className="max-w-3xl lg:max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-10">
           <div className="flex flex-col items-center gap-4 sm:gap-8 mb-6">
             <div className="relative group shrink-0">
               <div
@@ -415,7 +416,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {dashboardTab === 'notifications' && (
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 sm:py-32 text-zinc-400 dark:text-zinc-500">
               <svg className="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -459,7 +460,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {dashboardTab === 'messages' && (
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6">
+        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6">
           {activeThread ? (
             <ChatDrawer
               token={token}
@@ -727,6 +728,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
           </div>
         </div>
       </nav>
+      </div>
     </div>
   );
 }

@@ -48,7 +48,7 @@ export default function Sidebar({
   }, [menuOpen]);
 
   return (
-    <aside className={`hidden lg:flex flex-col w-16 hover:w-[120px] bg-white dark:bg-zinc-900 border-r border-zinc-100 dark:border-zinc-800 fixed inset-y-0 left-0 z-40 py-3 group transition-all duration-200 ${className}`}>
+    <aside className={`hidden lg:flex flex-col w-16 hover:w-[120px] bg-white dark:bg-zinc-900 border-r border-zinc-100 dark:border-zinc-800 lg:sticky lg:top-0 lg:h-screen shrink-0 py-3 group transition-all duration-200 ${className}`}>
       <div className="flex items-center gap-2.5 px-4 h-8 mb-4">
         {logo && <img src={logo} alt="Ggallery" className="h-5 w-auto object-contain shrink-0" />}
       </div>
