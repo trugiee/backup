@@ -168,7 +168,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-20 md:pb-0 lg:flex">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 pb-20 sm:pb-0 sm:flex">
       <Sidebar
         tabs={collectorTabs}
         activeTab={dashboardTab}
@@ -645,7 +645,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {/* Mobile bottom nav */}
-      <nav ref={mobileNavRef} className="md:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-2 pb-safe">
+      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-2 pb-safe">
         <div className="flex items-center justify-around h-16">
           {([
             { tab: 'browse' as DashboardTab, label: 'Gallery', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },

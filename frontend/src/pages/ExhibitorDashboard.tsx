@@ -246,7 +246,7 @@ export default function ExhibitorDashboard({
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans pb-20 sm:pb-0 lg:flex">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 font-sans pb-20 sm:pb-0 sm:flex">
       <Sidebar
         tabs={exhibitorTabs}
         activeTab={dashboardTab}

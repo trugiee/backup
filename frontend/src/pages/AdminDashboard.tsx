@@ -190,7 +190,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans pb-20 md:pb-0 lg:flex">
+    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans pb-20 sm:pb-0 sm:flex">
       <Sidebar
         tabs={adminTabs}
         activeTab={activeTab}
