@@ -20,6 +20,7 @@ interface ChatDrawerProps {
 
 export default function ChatDrawer({
   token,
+  user,
   exhibitorId,
   exhibitorName,
   exhibitorAvatar,
