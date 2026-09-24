@@ -421,60 +421,96 @@ export default function ExhibitorDashboard({
       {dashboardTab === 'statistics' && (
         <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           {/* Asymmetric Space-Saving Black & White Bento Grid */}
+          {/* Ultra-Stylish Space-Saving Black & White Bento Grid */}
           <div className="mb-6">
-            <div className="flex items-center justify-between mb-3">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-zinc-400">Statistics</p>
+            <div className="flex items-center justify-between mb-3.5 px-0.5">
+              <div className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                <p className="text-[10px] font-mono font-semibold uppercase tracking-[0.3em] text-zinc-400">Statistics</p>
+              </div>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest hidden sm:inline">Overview</span>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-              {/* Box 1: HERO - Total Sales (Spans 2 columns, BIGGER than others) */}
-              <div className="col-span-2 bg-black border border-white/20 rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:border-white/40 transition-all shadow-lg">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-white/60">Total Sales</span>
-                  <span className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full text-white/50">REVENUE</span>
+              {/* Box 1: HERO - Total Sales (Spans 2 columns, BIGGER & MORE PROMINENT) */}
+              <div className="col-span-2 bg-gradient-to-br from-zinc-900/95 via-zinc-950 to-black border border-white/15 border-t-white/40 rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/40 hover:shadow-2xl hover:shadow-black/80 transition-all duration-300">
+                {/* Subtle Ambient Glow & Embossed Watermark */}
+                <div className="pointer-events-none absolute -top-16 -right-16 w-36 h-36 rounded-full bg-white/[0.04] blur-2xl group-hover:bg-white/[0.07] transition-all duration-500" />
+                <span className="pointer-events-none absolute -right-1 -bottom-4 text-7xl font-extralight text-white/[0.03] select-none font-mono">₱</span>
+
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    </div>
+                    <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-300">Total Sales</span>
+                  </div>
+                  <span className="text-[9px] font-mono bg-white/[0.05] border border-white/10 px-2 py-0.5 rounded-full text-zinc-400 tracking-wider">REVENUE</span>
                 </div>
-                <div className="my-2.5 flex items-baseline">
-                  <span className="text-lg sm:text-xl font-light text-white/50 mr-1">₱</span>
+
+                <div className="my-2.5 flex items-baseline relative z-10">
+                  <span className="text-xl sm:text-2xl font-light text-zinc-400 mr-1.5 font-mono">₱</span>
                   <span className="text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tighter text-white">
                     {stats ? stats.sales.total.toLocaleString() : '0'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-white/40 border-t border-white/10 pt-2.5">
-                  <span>Total collected revenue</span>
-                  <span>{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length} transactions</span>
+
+                <div className="flex items-center justify-between text-[11px] text-zinc-400 border-t border-white/[0.08] pt-2.5 relative z-10">
+                  <span>Gross collected revenue</span>
+                  <span className="font-mono text-[10px] text-zinc-300">{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length} transactions</span>
                 </div>
               </div>
 
               {/* Box 2: Total Artworks */}
-              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Total Artworks</span>
+              <div className="col-span-1 bg-gradient-to-b from-zinc-900/70 via-zinc-950 to-black border border-white/10 border-t-white/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/30 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">Total Artworks</span>
+                  <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="1.5"/><circle cx="8.5" cy="8.5" r="1.5" strokeWidth="1.5"/><path d="M21 15l-5-5L5 21" strokeWidth="1.5"/></svg>
+                  </div>
+                </div>
                 <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
                   {stats?.total ?? artworks.length}
                 </p>
-                <span className="text-[10px] text-white/40">Portfolio pieces</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wide">portfolio pieces</span>
               </div>
 
               {/* Box 3: Available */}
-              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Available</span>
+              <div className="col-span-1 bg-gradient-to-b from-zinc-900/70 via-zinc-950 to-black border border-white/10 border-t-white/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/30 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">Available</span>
+                  <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+                  </div>
+                </div>
                 <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
                   {artworks.filter(a => a.status === 'Available').length}
                 </p>
-                <span className="text-[10px] text-white/40">Ready to sell</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wide">live in gallery</span>
               </div>
 
               {/* Box 4: Sold */}
-              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Sold</span>
+              <div className="col-span-1 bg-gradient-to-b from-zinc-900/70 via-zinc-950 to-black border border-white/10 border-t-white/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/30 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">Sold</span>
+                  <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400">
+                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M5 13l4 4L19 7" /></svg>
+                  </div>
+                </div>
                 <p className="my-1.5 text-2xl sm:text-3xl font-light tracking-tight text-white">
                   {stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}
                 </p>
-                <span className="text-[10px] text-white/40">Completed</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wide">completed sales</span>
               </div>
 
               {/* Box 5: Avg. Price */}
-              <div className="col-span-1 bg-black border border-white/10 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/30 transition-all shadow-sm">
-                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-white/60">Avg. Price</span>
+              <div className="col-span-1 bg-gradient-to-b from-zinc-900/70 via-zinc-950 to-black border border-white/10 border-t-white/30 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/30 hover:shadow-xl transition-all duration-300">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-zinc-400">Avg. Price</span>
+                  <div className="w-5 h-5 rounded-md bg-white/[0.04] border border-white/10 flex items-center justify-center text-zinc-400 font-mono text-[10px]">
+                    ₱
+                  </div>
+                </div>
                 <p className="my-1.5 text-xl sm:text-2xl font-light tracking-tight text-white truncate">
                   {(stats?.sales?.averagePrice && stats.sales.averagePrice > 0)
                     ? `₱${Math.round(stats.sales.averagePrice).toLocaleString()}`
@@ -482,24 +518,31 @@ export default function ExhibitorDashboard({
                       ? `₱${Math.round(artworks.filter(a => (a.price ?? 0) > 0).reduce((s, a) => s + (a.price ?? 0), 0) / artworks.filter(a => (a.price ?? 0) > 0).length).toLocaleString()}`
                       : '—'}
                 </p>
-                <span className="text-[10px] text-white/40">Per piece</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wide">per artwork</span>
               </div>
 
               {/* Box 6: Achievements (Double Width to balance Bento grid) */}
-              <div className="col-span-2 bg-black border border-white/15 rounded-2xl p-4 sm:p-5 flex flex-col justify-between hover:border-white/35 transition-all shadow-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.25em] text-white/60">Achievements</span>
-                  <span className="text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full text-white/50">MILESTONES</span>
+              <div className="col-span-2 bg-gradient-to-br from-zinc-900/90 via-zinc-950 to-black border border-white/15 border-t-white/35 rounded-2xl p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/40 hover:shadow-2xl hover:shadow-black/80 transition-all duration-300">
+                <div className="flex items-center justify-between relative z-10">
+                  <div className="flex items-center gap-2">
+                    <div className="w-6 h-6 rounded-lg bg-white/[0.06] border border-white/10 flex items-center justify-center text-white/70">
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
+                    </div>
+                    <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.25em] text-zinc-300">Achievements</span>
+                  </div>
+                  <span className="text-[9px] font-mono bg-white/[0.05] border border-white/10 px-2 py-0.5 rounded-full text-zinc-400 tracking-wider">MILESTONES</span>
                 </div>
-                <div className="my-1.5 flex items-baseline gap-2">
+
+                <div className="my-1.5 flex items-baseline gap-2 relative z-10">
                   <span className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
                     {stats?.achievements ?? achievements.length}
                   </span>
-                  <span className="text-xs text-white/40">verified milestones</span>
+                  <span className="text-xs text-zinc-400 font-mono tracking-tight">verified recognitions</span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-white/40 border-t border-white/10 pt-2.5">
+
+                <div className="flex items-center justify-between text-[11px] text-zinc-400 border-t border-white/[0.08] pt-2.5 relative z-10">
                   <span>Exhibitor honors & badges</span>
-                  <span>{achievements.filter(a => a.isVerified).length} verified</span>
+                  <span className="font-mono text-[10px] text-zinc-300">{achievements.filter(a => a.isVerified).length} verified</span>
                 </div>
               </div>
             </div>
