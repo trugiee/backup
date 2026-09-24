@@ -420,22 +420,38 @@ export default function ExhibitorDashboard({
 
       {dashboardTab === 'statistics' && (
         <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-6">Statistics</h1>
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight mb-8">Statistics</h1>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-8">
-            {[
-              { label: 'Total Artworks', value: stats?.total ?? artworks.length, color: 'text-zinc-900' },
-              { label: 'Available', value: artworks.filter(a => a.status === 'Available').length, color: 'text-emerald-600' },
-              { label: 'Sold', value: stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length, color: 'text-blue-600' },
-              { label: 'Total Sales', value: stats ? `₱${stats.sales.total.toLocaleString()}` : '—', color: 'text-zinc-900' },
-              { label: 'Avg. Price', value: stats?.sales.count ? `₱${Math.round(stats.sales.averagePrice).toLocaleString()}` : '—', color: 'text-zinc-900' },
-              { label: 'Achievements', value: stats?.achievements ?? achievements.length, color: 'text-amber-600' },
-            ].map(s => (
-              <div key={s.label} className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-5">
-                <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-wider">{s.label}</p>
-                <p className={`text-xl sm:text-2xl font-black mt-1 ${s.color}`}>{s.value}</p>
-              </div>
-            ))}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 col-span-2">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Total Artworks</p>
+              <p className="text-4xl sm:text-5xl font-light mt-2 text-zinc-900 dark:text-zinc-50">{stats?.total ?? artworks.length}</p>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Available</p>
+              <p className="text-3xl font-light mt-2 text-emerald-500">{artworks.filter(a => a.status === 'Available').length}</p>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Sold</p>
+              <p className="text-3xl font-light mt-2 text-blue-500">{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}</p>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Total Sales</p>
+              <p className="text-2xl font-light mt-2 text-zinc-900 dark:text-zinc-50">{stats ? `₱${stats.sales.total.toLocaleString()}` : '—'}</p>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Avg. Price</p>
+              <p className="text-2xl font-light mt-2 text-zinc-900 dark:text-zinc-50">{stats?.sales.count ? `₱${Math.round(stats.sales.averagePrice).toLocaleString()}` : '—'}</p>
+            </div>
+
+            <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl p-6 col-span-2">
+              <p className="text-[11px] font-medium text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Achievements</p>
+              <p className="text-3xl font-light mt-2 text-amber-500">{stats?.achievements ?? achievements.length}</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
