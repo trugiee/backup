@@ -421,50 +421,53 @@ export default function ExhibitorDashboard({
       {dashboardTab === 'statistics' && (
         <div className="max-w-6xl lg:max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
           {/* Modern Space-Saving Statistics Ribbon */}
-          <div className="relative overflow-hidden bg-zinc-950 border border-zinc-800/80 rounded-2xl p-4 sm:p-5 mb-6 shadow-xl">
-            <div className="pointer-events-none absolute -top-12 -right-10 w-36 h-36 rounded-full bg-white/[0.04] blur-2xl" />
-            <div className="pointer-events-none absolute -bottom-10 left-1/3 w-36 h-36 rounded-full bg-emerald-500/[0.03] blur-2xl" />
+          <div className="relative overflow-hidden bg-zinc-950 border border-zinc-800/80 rounded-2xl p-5 sm:p-6 mb-6 shadow-xl">
+            <div className="pointer-events-none absolute -top-12 -right-10 w-40 h-40 rounded-full bg-white/[0.04] blur-2xl" />
+            <div className="pointer-events-none absolute -bottom-10 left-1/4 w-40 h-40 rounded-full bg-white/[0.02] blur-2xl" />
 
             <div className="relative">
-              <div className="flex items-center justify-between mb-3 pb-2.5 border-b border-white/[0.07]">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-zinc-400">Statistics Overview</p>
-                <span className="flex items-center gap-1.5 text-[10px] font-medium text-zinc-400">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  Live Sync
-                </span>
-              </div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.3em] text-zinc-400 mb-4">
+                Statistics
+              </p>
 
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08]">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 divide-y sm:divide-y-0 sm:divide-x divide-white/[0.08]">
                 {/* Total Artworks */}
-                <div className="pt-2 sm:pt-0 sm:px-3 first:pl-0">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Artworks</p>
-                  <p className="mt-1 text-2xl sm:text-3xl font-light tracking-tight text-white">
+                <div className="pt-2 sm:pt-0 sm:pr-4 first:pl-0">
+                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Artworks</p>
+                  <p className="mt-1 text-3xl sm:text-4xl lg:text-5xl font-extralight tracking-tight text-white">
                     {stats?.total ?? artworks.length}
                   </p>
+                  <p className="text-[10px] text-zinc-400 mt-1">all pieces</p>
                 </div>
 
                 {/* Available */}
-                <div className="pt-2 sm:pt-0 sm:px-4">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-400">Available</p>
-                  <p className="mt-1 text-2xl sm:text-3xl font-light tracking-tight text-emerald-400">
+                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
+                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Available</p>
+                  <p className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
                     {artworks.filter(a => a.status === 'Available').length}
                   </p>
+                  <p className="text-[10px] text-zinc-400 mt-1">ready to sell</p>
                 </div>
 
                 {/* Sold */}
-                <div className="pt-3 sm:pt-0 sm:px-4">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-400">Sold</p>
-                  <p className="mt-1 text-2xl sm:text-3xl font-light tracking-tight text-blue-400">
+                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
+                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Sold</p>
+                  <p className="mt-1 text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
                     {stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length}
                   </p>
+                  <p className="text-[10px] text-zinc-400 mt-1">completed</p>
                 </div>
 
                 {/* Total Sales */}
-                <div className="pt-3 sm:pt-0 sm:px-4">
-                  <p className="text-[10px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Sales</p>
-                  <p className="mt-1 text-2xl sm:text-3xl font-light tracking-tight text-white">
-                    {stats ? `₱${stats.sales.total.toLocaleString()}` : '₱0'}
-                  </p>
+                <div className="pt-3 sm:pt-0 sm:px-4 sm:pl-6">
+                  <p className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.2em] text-zinc-400">Total Sales</p>
+                  <div className="mt-1 flex items-baseline">
+                    <span className="text-base sm:text-lg font-light text-zinc-400 mr-1">₱</span>
+                    <span className="text-2xl sm:text-3xl lg:text-4xl font-light tracking-tight text-white">
+                      {stats ? stats.sales.total.toLocaleString() : '0'}
+                    </span>
+                  </div>
+                  <p className="text-[10px] text-zinc-400 mt-1">total revenue</p>
                 </div>
               </div>
             </div>
