@@ -3,6 +3,7 @@
 
 @theme {
   --breakpoint-sm: 480px;
+  --font-display: 'Montserrat', system-ui, sans-serif;
 }
 
 @layer base {
