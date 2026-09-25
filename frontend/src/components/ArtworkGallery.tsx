@@ -13,6 +13,7 @@ interface ArtworkGalleryProps {
   hasMore?: boolean;
   loadingMore?: boolean;
   onLoadMore?: () => void;
+  dashboard?: boolean;
 }
 
 function SkeletonCard() {
@@ -30,10 +31,11 @@ function SkeletonCard() {
   );
 }
 
-export default function ArtworkGallery({ artworks, loading, token, user, onSignIn, hasMore, loadingMore, onLoadMore }: ArtworkGalleryProps) {
+export default function ArtworkGallery({ artworks, loading, token, user, onSignIn, hasMore, loadingMore, onLoadMore, dashboard = false }: ArtworkGalleryProps) {
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('all');
   const [selected, setSelected] = useState<Artwork | null>(null);
+  const contentPadding = dashboard ? 'px-1' : 'px-4';
 
   const types = [...new Set(artworks.map(a => a.type))];
   const filterItems = [
@@ -48,7 +50,7 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
   return (
     <>
       <div className="sticky top-0 z-30 bg-white backdrop-blur-md border-b border-zinc-100">
-        <div className="px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 w-full">
+        <div className={`${contentPadding} py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4 w-full`}>
           <div className="w-full overflow-x-auto whitespace-nowrap scrollbar-none">
             <FilterBar items={filterItems} selected={filterType} onChange={setFilterType} />
           </div>
@@ -62,7 +64,7 @@ export default function ArtworkGallery({ artworks, loading, token, user, onSignI
         </div>
       </div>
 
-      <main className="w-full px-4 py-8 sm:py-12">
+      <main className={`w-full ${contentPadding} py-8 sm:py-12`}>
         {loading ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 sm:gap-6" aria-hidden="true">
             {Array.from({ length: 10 }).map((_, i) => <SkeletonCard key={i} />)}

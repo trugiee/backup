@@ -52,6 +52,7 @@ interface ExhibitorProfileViewProps {
   onMessage?: () => void;
 
   isOwner?: boolean;
+  dashboard?: boolean;
   onUpdateProfilePic?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   isUploadingPic?: boolean;
   onViewProfilePic?: () => void;
@@ -75,6 +76,7 @@ export default function ExhibitorProfileView({
   canChat = false,
   onMessage,
   isOwner = false,
+  dashboard = false,
   onUpdateProfilePic,
   isUploadingPic,
   onViewProfilePic,
@@ -151,7 +153,7 @@ export default function ExhibitorProfileView({
         </div>
       ) : (
         <div className={isOverlay ? 'flex-1 overflow-y-auto' : ''}>
-          <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+          <div className={dashboard ? 'w-full px-1 py-6 sm:py-10' : 'max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-10'}>
 
             <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5 sm:gap-8 mb-6 sm:mb-8">
               <div className="relative shrink-0">

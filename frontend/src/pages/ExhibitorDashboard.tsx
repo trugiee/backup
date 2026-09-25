@@ -259,7 +259,7 @@ export default function ExhibitorDashboard({
       />
 
       <div className="flex-1 min-w-0">
-        <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full max-w-full lg:max-w-7xl mx-auto">
+        <div className="px-1 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full">
         <div ref={dashboardLabelRef} className="relative">
           <button
             onClick={() => setShowDashboardMenu(!showDashboardMenu)}
@@ -342,7 +342,7 @@ export default function ExhibitorDashboard({
 
       {dashboardTab === 'manage' && (
         <>
-          <div className="max-w-full mx-auto px-4 sm:px-6 pt-6 sm:pt-8 pb-2 sm:pb-4 flex items-start justify-between gap-4">
+          <div className="w-full px-1 pt-6 sm:pt-8 pb-2 sm:pb-4 flex items-start justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-1 sm:mb-2">My Artworks</h1>
               <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-lg">Manage your artwork collection.</p>
@@ -354,7 +354,7 @@ export default function ExhibitorDashboard({
               + Add Artwork
             </button>
           </div>
-          <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pb-2 sm:pb-4">
+          <div className="w-full px-1 pb-2 sm:pb-4">
             <FilterBar
               items={[
                 { value: 'all', label: 'All', count: artworks.length },
@@ -365,7 +365,7 @@ export default function ExhibitorDashboard({
             />
           </div>
 
-          <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pb-24 sm:pb-12">
+          <div className="w-full px-1 pb-24 sm:pb-12">
             {loading ? (
               <div className="flex items-center justify-center py-16 sm:py-32">
                 <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin" />
@@ -419,7 +419,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'statistics' && (
-        <div className="max-w-5xl mx-auto px-3 sm:px-5 py-4 sm:py-5">
+        <div className="w-full px-1 py-4 sm:py-5">
           {/* Ultra-Compact Black & White Stats Bento */}
           <div className="mb-3">
             <div className="flex items-center justify-between mb-2 px-0.5">
@@ -611,6 +611,7 @@ export default function ExhibitorDashboard({
               achievements,
             }}
             isOwner
+            dashboard
             onViewProfilePic={() => setViewingProfilePic(true)}
             onUpdateProfilePic={handleProfilePicUpload}
             isUploadingPic={uploadingProfilePic}
@@ -647,7 +648,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'notifications' && (
-        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="w-full px-1 py-8 sm:py-12">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 sm:py-32 text-black dark:text-white">
               <svg className="w-16 h-16 mb-4 text-black dark:text-white opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -691,7 +692,7 @@ export default function ExhibitorDashboard({
       )}
 
       {dashboardTab === 'messages' && (
-        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="w-full px-1 py-6 sm:py-8">
           {activeThread ? (
             <div className="bg-white dark:bg-zinc-900 border border-zinc-100 dark:border-zinc-800 rounded-2xl overflow-hidden flex flex-col h-[calc(100vh-180px)] sm:h-[70vh]">
               <div className="flex items-center gap-3 px-5 py-4 border-b border-zinc-100 dark:border-zinc-800 shrink-0">
@@ -832,6 +833,7 @@ export default function ExhibitorDashboard({
       {showPublicProfile && (
         <ExhibitorProfileView
           exhibitorId={user.id}
+          dashboard
           canChat={false}
           onClose={() => setShowPublicProfile(false)}
         />
@@ -844,7 +846,7 @@ export default function ExhibitorDashboard({
         />
       )}
 
-      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-2 pb-safe">
+      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-1 pb-safe">
         <div className="flex items-center justify-around h-16">
           {([
             { tab: 'manage' as const, label: 'Manage', icon: 'M4 6h16M4 12h16M4 18h16' },

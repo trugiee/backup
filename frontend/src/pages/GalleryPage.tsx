@@ -41,7 +41,7 @@ export default function GalleryPage({ user, token, onLogout }: GalleryPageProps)
   return (
     <div className="min-h-screen bg-zinc-50 dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
       <nav className="border-b border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-10 sm:h-12 flex items-center justify-center relative">
+        <div className="w-full px-1 h-10 sm:h-12 flex items-center justify-center relative">
           <img
             src="/logo-icon.png"
             alt="Ggallery Logo"
@@ -59,12 +59,12 @@ export default function GalleryPage({ user, token, onLogout }: GalleryPageProps)
         </div>
       </nav>
 
-      <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-4 sm:pb-6">
+      <div className="w-full px-1 pt-8 sm:pt-12 pb-4 sm:pb-6">
         <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-1 sm:mb-2">Gallery Collection</h1>
         <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-lg">Browse all artworks.</p>
       </div>
 
-      <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 mb-6 sm:mb-8">
+      <div className="w-full px-1 mb-6 sm:mb-8">
         <FilterBar
           items={[
             { value: 'all', label: 'All', count: artworks.length },
@@ -75,7 +75,7 @@ export default function GalleryPage({ user, token, onLogout }: GalleryPageProps)
         />
       </div>
 
-      <div className="max-w-full lg:max-w-7xl mx-auto px-4 sm:px-6 pb-24 sm:pb-12">
+      <div className="w-full px-1 pb-24 sm:pb-12">
         {dataLoading ? (
           <div className="flex items-center justify-center py-16 sm:py-32">
             <div className="w-10 h-10 border-4 border-black border-t-transparent rounded-full animate-spin" />

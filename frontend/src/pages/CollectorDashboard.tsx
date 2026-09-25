@@ -182,7 +182,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
 
       <div className="flex-1 min-w-0">
       {dashboardTab !== 'browse' && (
-      <div className="px-4 sm:px-6 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full max-w-full lg:max-w-5xl mx-auto">
+      <div className="px-1 pt-4 sm:pt-6 pb-0 flex items-center justify-between w-full">
         <div ref={dashboardLabelRef} className="relative">
           <button
             onClick={() => setShowDashboardMenu(!showDashboardMenu)}
@@ -281,7 +281,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
               style={{ backgroundImage: 'radial-gradient(ellipse at 70% 50%, #3f3f46 0%, transparent 70%), radial-gradient(ellipse at 20% 80%, #27272a 0%, transparent 60%)' }}
             />
             <img src="/logo-white.png" alt="" aria-hidden="true" className="absolute right-0 top-1/2 -translate-y-1/2 w-72 sm:w-96 md:w-[28rem] lg:w-[36rem] opacity-[0.04] pointer-events-none select-none object-contain" />
-            <div className="relative px-4 sm:px-10 py-6 sm:py-10">
+            <div className="relative px-1 py-6 sm:py-10">
               <p className="text-zinc-400 text-[9px] sm:text-xs font-semibold tracking-widest uppercase mb-1 sm:mb-2">
                 The Gallery
               </p>
@@ -293,12 +293,12 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
               </h1>
             </div>
           </div>
-          <ArtworkGallery artworks={artworks} loading={dataLoading} token={token} user={user} />
+          <ArtworkGallery artworks={artworks} loading={dataLoading} token={token} user={user} dashboard />
         </>
       )}
 
       {dashboardTab === 'profile' && (
-        <div className="max-w-3xl lg:max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-10">
+        <div className="w-full px-1 py-4 sm:py-10">
           <div className="flex flex-col items-center gap-4 sm:gap-8 mb-6">
             <div className="relative group shrink-0">
               <div
@@ -411,7 +411,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {dashboardTab === 'notifications' && (
-        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="w-full px-1 py-8 sm:py-12">
           {notifications.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 sm:py-32 text-zinc-400 dark:text-zinc-500">
               <svg className="w-16 h-16 mb-4 opacity-30" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
@@ -455,7 +455,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {dashboardTab === 'messages' && (
-        <div className="max-w-3xl lg:max-w-5xl mx-auto px-4 sm:px-6 py-6">
+        <div className="w-full px-1 py-6">
           {activeThread ? (
             <ChatDrawer
               token={token}
@@ -640,7 +640,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {/* Mobile bottom nav */}
-      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-2 pb-safe">
+      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-1 pb-safe">
         <div className="flex items-center justify-around h-16">
           {([
             { tab: 'browse' as DashboardTab, label: 'Gallery', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },

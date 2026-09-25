@@ -201,7 +201,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
 
 
       <div className="flex-1 min-w-0">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10">
+      <div className="w-full px-1 py-10">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center min-w-0">
               <div className="min-w-0">
@@ -627,7 +627,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
 
       {/* Mobile bottom nav */}
       <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 z-50 px-1 pb-safe">
-        <div className="flex items-center justify-between h-14 max-w-md mx-auto">
+        <div className="flex items-center justify-between h-14 w-full">
           {([
             { tab: 'overview' as AdminTab, label: 'Overview', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
             { tab: 'management' as AdminTab, label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
@@ -704,6 +704,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
       {viewingProfile?.role === 'exhibitor' && (
         <ExhibitorProfileView
           exhibitorId={viewingProfile.id}
+          dashboard
           onClose={() => setViewingProfile(null)}
         />
       )}
