@@ -54,11 +54,9 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
           <p className="text-zinc-400 text-[10px] sm:text-sm font-semibold tracking-widest uppercase mb-2 sm:mb-4">
             MUGNA GALLERY
           </p>
-          <h1 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-none mb-4 sm:mb-6 font-display">
+          <h1 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-[10px] leading-none mb-4 sm:mb-6 font-display">
             Discover{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-300 to-zinc-500">
-              Exquisite
-            </span>
+            Exquisite
             <br />
             Works of Art
           </h1>

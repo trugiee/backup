@@ -285,11 +285,9 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
               <p className="text-zinc-400 text-[9px] sm:text-xs font-semibold tracking-widest uppercase mb-1 sm:mb-2">
                 The Gallery
               </p>
-              <h1 className="text-xl sm:text-3xl font-black tracking-tight leading-none mb-2 sm:mb-3 font-display">
+              <h1 className="text-xl sm:text-3xl font-black tracking-[10px] leading-none mb-2 sm:mb-3 font-display">
                 Discover{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-zinc-300 to-zinc-500">
-                  Exquisite
-                </span>
+                Exquisite
                 <br />
                 Works of Art
               </h1>
