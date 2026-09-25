@@ -285,7 +285,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
               <p className="text-zinc-400 text-[9px] sm:text-xs font-semibold tracking-widest uppercase mb-1 sm:mb-2">
                 The Gallery
               </p>
-              <h1 className="text-xl sm:text-3xl font-black tracking-[10px] leading-none mb-2 sm:mb-3 font-display">
+              <h1 className="text-xl sm:text-3xl font-black tracking-[5px] leading-none mb-2 sm:mb-3 font-display">
                 Discover{' '}
                 Exquisite
                 <br />
