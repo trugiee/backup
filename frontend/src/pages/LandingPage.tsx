@@ -62,9 +62,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
             <br />
             Works of Art
           </h1>
-          <p className="text-zinc-400 text-sm sm:text-lg max-w-xl leading-relaxed mb-6 sm:mb-10">
-            Browse our curated collection of original artworks from talented exhibitors.
-          </p>
+          
           <div className="flex flex-wrap items-center gap-3">
             <button
               onClick={onSignIn}

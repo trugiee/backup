@@ -293,9 +293,6 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
                 <br />
                 Works of Art
               </h1>
-              <p className="text-zinc-400 text-xs sm:text-sm max-w-xl leading-relaxed mb-3">
-                Browse our curated collection of original artworks from talented exhibitors.
-              </p>
             </div>
           </div>
           <ArtworkGallery artworks={artworks} loading={dataLoading} token={token} user={user} />
