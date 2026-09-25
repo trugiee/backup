@@ -91,7 +91,7 @@ export default function Sidebar({
         </button>
 
         {menuOpen && (
-          <div className="absolute bottom-full mb-2 left-2 right-2 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-xl py-2 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-150">
+          <div className="absolute bottom-0 left-full ml-3 w-52 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-2xl py-2 flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-left-2 duration-150">
             <div className="px-3 pb-2 mb-1 border-b border-zinc-100 dark:border-zinc-800">
               <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">{user?.name || 'User'}</p>
               <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">{user?.email}</p>
