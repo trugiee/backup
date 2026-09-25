@@ -50,7 +50,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
           aria-hidden="true"
           className="absolute right-0 top-1/2 -translate-y-1/2 w-72 sm:w-96 md:w-[28rem] lg:w-[36rem] opacity-[0.04] pointer-events-none select-none object-contain"
         />
-        <div className="relative max-w-full lg:max-w-7xl mx-auto px-4 sm:px-10 py-16 sm:py-32">
+        <div className="relative w-full px-4 py-16 sm:py-32">
           <p className="text-zinc-400 text-[10px] sm:text-sm font-semibold tracking-widest uppercase mb-2 sm:mb-4">
             MUGNA GALLERY
           </p>
@@ -92,7 +92,7 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
       />
 
       <footer className="border-t border-zinc-200 bg-white mt-12 sm:mt-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-10 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="w-full px-4 py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <img src="/logo.png" alt="Ggallery" className="h-7 w-auto object-contain opacity-60" />
           <p className="text-zinc-400 text-xs">
             &copy; {new Date().getFullYear()} Ggallery. All rights reserved.
