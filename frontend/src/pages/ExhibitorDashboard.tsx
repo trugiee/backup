@@ -344,8 +344,7 @@ export default function ExhibitorDashboard({
         <>
           <div className="w-full px-1 pt-6 sm:pt-8 pb-2 sm:pb-4 flex items-start justify-between gap-4">
             <div>
-              <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-1 sm:mb-2">My Artworks</h1>
-              <p className="text-zinc-500 dark:text-zinc-400 text-sm sm:text-lg">Manage your artwork collection.</p>
+              <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight mb-1 sm:mb-2">WOKS</h1>
             </div>
             <button
               onClick={() => setShowForm(true)}
