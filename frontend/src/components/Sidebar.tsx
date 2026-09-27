@@ -53,7 +53,7 @@ export default function Sidebar({
         {logo && <img src={logo} alt="Ggallery" className="h-5 w-auto object-contain shrink-0" />}
       </div>
 
-      <nav className="flex-1 flex flex-col gap-0.5 px-2">
+      <nav className="flex-1 flex flex-col justify-center gap-0.5 px-2">
         {tabs.map(tab => (
           <button
             key={tab.id}
