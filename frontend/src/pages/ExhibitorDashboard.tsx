@@ -430,9 +430,9 @@ export default function ExhibitorDashboard({
             </div>
 
             {/* Total Sales (square, right) + the other five metrics (left) */}
-            <div className="grid grid-cols-1 sm:grid-cols-6 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-[1fr_360px] sm:max-w-4xl gap-2">
               {/* Total Sales - square hero on the right */}
-              <div className="order-1 sm:order-2 col-span-1 sm:col-span-3 aspect-square bg-black border border-white/20 border-t-white/45 rounded-lg p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/40 hover:shadow-lg transition-all duration-300">
+              <div className="order-1 sm:order-2 aspect-square bg-black border border-white/20 border-t-white/45 rounded-lg p-4 sm:p-5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/40 hover:shadow-lg transition-all duration-300">
                 <div className="pointer-events-none absolute -top-10 -right-10 w-32 h-32 rounded-full bg-white/[0.04] blur-xl" />
                 <span className="pointer-events-none absolute -right-1 -bottom-3 text-7xl font-extralight text-white/[0.03] select-none font-mono">₱</span>
                 <div className="relative z-10 flex items-center gap-1.5">
@@ -454,7 +454,7 @@ export default function ExhibitorDashboard({
               </div>
 
               {/* The other five metrics */}
-              <div className="order-2 sm:order-1 col-span-1 sm:col-span-3 grid grid-cols-3 gap-2 sm:grid-rows-2">
+              <div className="order-2 sm:order-1 grid grid-cols-3 gap-2 sm:grid-rows-2">
                 {/* Achievements */}
                 <div className="col-span-2 bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
                   <div className="relative z-10 flex items-center justify-between mb-0.5">
