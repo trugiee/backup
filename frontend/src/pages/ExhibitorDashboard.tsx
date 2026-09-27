@@ -429,60 +429,63 @@ export default function ExhibitorDashboard({
               <span className="text-[8px] font-mono font-semibold text-zinc-500 uppercase tracking-widest hidden sm:inline">Overview</span>
             </div>
 
-            {/* Row 1: Hero cards side by side */}
-            <div className="grid grid-cols-2 gap-2 mb-2">
-              {/* Hero 1: Total Sales */}
-              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
-                <div className="pointer-events-none absolute -top-8 -right-8 w-20 h-20 rounded-full bg-white/[0.03] blur-xl" />
-                <span className="pointer-events-none absolute -right-1 -bottom-2 text-4xl font-extralight text-white/[0.03] select-none font-mono">₱</span>
+            {/* Tier 1: Total Sales (large) */}
+            <div className="grid grid-cols-1 gap-2 mb-2">
+              <div className="bg-black border border-white/20 border-t-white/45 rounded-lg p-3.5 sm:p-4 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/40 hover:shadow-lg transition-all duration-300">
+                <div className="pointer-events-none absolute -top-10 -right-10 w-28 h-28 rounded-full bg-white/[0.04] blur-xl" />
+                <span className="pointer-events-none absolute -right-1 -bottom-3 text-6xl font-extralight text-white/[0.03] select-none font-mono">₱</span>
                 <div className="relative z-10">
-                  <div className="flex items-center gap-1 mb-0.5">
-                    <svg className="w-2.5 h-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
-                    <span className="text-[8px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-300">Total Sales</span>
+                  <div className="flex items-center gap-1.5 mb-1">
+                    <svg className="w-3 h-3 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>
+                    <span className="text-[9px] font-mono font-bold uppercase tracking-[0.2em] text-zinc-300">Total Sales</span>
                   </div>
                   <div className="flex items-baseline">
-                    <span className="text-[10px] font-bold text-zinc-300 mr-0.5 font-mono">₱</span>
-                    <span className="text-xl sm:text-2xl font-bold tracking-tighter text-white">
+                    <span className="text-xs font-bold text-zinc-300 mr-1 font-mono">₱</span>
+                    <span className="text-3xl sm:text-4xl font-bold tracking-tighter text-white leading-none">
                       {stats ? stats.sales.total.toLocaleString() : '0'}
                     </span>
                   </div>
                 </div>
-                <div className="relative z-10 text-right">
+                <div className="relative z-10 text-right shrink-0 ml-2">
                   <span className="text-[7px] font-mono font-semibold bg-white/[0.05] border border-white/10 px-1 py-0.5 rounded-full text-zinc-400 tracking-wider">REVENUE</span>
                   <p className="text-[8px] text-zinc-400 font-semibold font-mono mt-1">{stats?.sales.count ?? artworks.filter(a => a.status === 'Sold').length} sold</p>
                 </div>
               </div>
+            </div>
 
-              {/* Hero 2: Achievements */}
-              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-row items-center justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
+            {/* Tier 2: Achievements, Artworks (medium) */}
+            <div className="grid grid-cols-2 gap-2 mb-2">
+              {/* Achievements */}
+              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
                 <div className="relative z-10">
                   <div className="flex items-center gap-1 mb-0.5">
-                    <svg className="w-2.5 h-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
+                    <svg className="w-2.5 h-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.563.563 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" /></svg>
                     <span className="text-[8px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-300">Achievements</span>
                   </div>
                   <span className="text-xl sm:text-2xl font-bold tracking-tight text-white">
                     {stats?.achievements ?? achievements.length}
                   </span>
                 </div>
-                <div className="relative z-10 text-right">
-                  <span className="text-[7px] font-mono font-semibold bg-white/[0.05] border border-white/10 px-1 py-0.5 rounded-full text-zinc-400 tracking-wider">MILESTONES</span>
-                  <p className="text-[8px] text-zinc-400 font-semibold font-mono mt-1">{achievements.filter(a => a.isVerified).length} verified</p>
+                <p className="text-[7px] text-zinc-500 font-semibold font-mono mt-1">{achievements.filter(a => a.isVerified).length} verified</p>
+              </div>
+
+              {/* Artworks */}
+              <div className="bg-black border border-white/15 border-t-white/35 rounded-lg p-2.5 flex flex-col justify-between relative overflow-hidden group hover:-translate-y-0.5 hover:border-white/35 hover:shadow-lg transition-all duration-300">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-1 mb-0.5">
+                    <svg className="w-2.5 h-2.5 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="1.5"/><circle cx="8.5" cy="8.5" r="1.5" strokeWidth="1.5"/><path d="M21 15l-5-5L5 21" strokeWidth="1.5"/></svg>
+                    <span className="text-[8px] font-mono font-semibold uppercase tracking-[0.2em] text-zinc-300">Artworks</span>
+                  </div>
+                  <span className="text-xl sm:text-2xl font-bold tracking-tight text-white">
+                    {stats?.total ?? artworks.length}
+                  </span>
                 </div>
+                <p className="text-[7px] text-zinc-500 font-semibold font-mono mt-1">total</p>
               </div>
             </div>
 
-            {/* Row 2: Four small stat chips */}
-            <div className="grid grid-cols-4 gap-2">
-              {/* Artworks */}
-              <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="text-[7px] font-mono font-bold uppercase tracking-[0.15em] text-zinc-400">Artworks</span>
-                  <svg className="w-2 h-2 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" strokeWidth="1.5"/><circle cx="8.5" cy="8.5" r="1.5" strokeWidth="1.5"/><path d="M21 15l-5-5L5 21" strokeWidth="1.5"/></svg>
-                </div>
-                <p className="text-base sm:text-lg font-bold tracking-tight text-white leading-none">{stats?.total ?? artworks.length}</p>
-                <span className="text-[7px] text-zinc-500 font-semibold font-mono tracking-wide mt-0.5">total</span>
-              </div>
-
+            {/* Tier 3: Available, Sold, Avg (small) */}
+            <div className="grid grid-cols-3 gap-2">
               {/* Available */}
               <div className="bg-black border border-white/[0.08] border-t-white/20 rounded-lg p-2 flex flex-col justify-between hover:-translate-y-0.5 hover:border-white/25 transition-all duration-200">
                 <div className="flex items-center justify-between mb-1">
