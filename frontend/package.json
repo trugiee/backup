@@ -8,10 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "cap:sync": "cd ../mobile && npx cap sync",
-    "cap:copy": "cd ../mobile && npx cap copy",
+    "cap:strip-apk": "node -e \"require('fs').rmSync('dist/ggallery.apk',{force:true})\"",
+    "cap:sync": "npm run cap:strip-apk && cd ../mobile && npx cap sync",
+    "cap:copy": "npm run cap:strip-apk && cd ../mobile && npx cap copy",
     "cap:open": "cd ../mobile && npx cap open android",
-    "cap:build": "npm run build && cd ../mobile && npx cap copy && cd android && ./gradlew assembleDebug"
+    "cap:build": "npm run build && npm run cap:strip-apk && cd ../mobile && npx cap copy && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
