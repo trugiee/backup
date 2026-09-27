@@ -58,10 +58,10 @@ export default function Sidebar({
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${ activeTab === tab.id ? 'bg-zinc-900 text-white' : 'text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800' }`}
+            className={`relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${ activeTab === tab.id ? 'bg-zinc-900 text-white' : 'text-black dark:text-zinc-100 hover:text-black dark:hover:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800' }`}
           >
             <div className="relative shrink-0">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d={tab.icon} />
               </svg>
               {tab.id === 'messages' && unreadCount > 0 && (
