@@ -1,7 +1,7 @@
 {
   "name": "ggallery",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,12 +12,15 @@
     "cap:sync": "npm run cap:strip-apk && cd ../mobile && npx cap sync",
     "cap:copy": "npm run cap:strip-apk && cd ../mobile && npx cap copy",
     "cap:open": "cd ../mobile && npx cap open android",
-    "cap:build": "npm run build && npm run cap:strip-apk && cd ../mobile && npx cap copy && cd android && ./gradlew assembleDebug"
+    "cap:build": "npm run cap:verify-version && npm run build && npm run cap:strip-apk && cd ../mobile && npx cap build android",
+    "cap:verify-version": "node ../scripts/ota.mjs verify",
+    "release:ota": "npm run build && node ../scripts/ota.mjs release"
   },
   "dependencies": {
     "@capacitor/android": "^8.4.1",
     "@capacitor/cli": "^8.4.1",
     "@capacitor/core": "^8.4.1",
+    "@capgo/capacitor-updater": "^8.51.25",
     "@tailwindcss/vite": "^4.3.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",

@@ -20,9 +20,14 @@ import notificationRoutes from './routes/notifications';
 import paymentRoutes from './routes/payments';
 import aiRoutes from './routes/ai';
 import reportRoutes from './routes/reports';
+import appUpdateRoutes from './routes/appUpdate';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// Behind a TLS-terminating proxy the OTA endpoint must hand back an https bundle
+// URL, otherwise req.protocol reports http and the download is blocked.
+app.set('trust proxy', true);
 
 app.use(cors());
 app.use(express.json());
@@ -30,12 +35,20 @@ app.use(express.json());
 const uploadDir = path.join(process.cwd(), 'uploads');
 app.use('/uploads', express.static(uploadDir));
 
+// OTA bundles. Filenames embed the bundle version, so they are immutable.
+const updatesDir = path.join(process.cwd(), 'updates');
+app.use(
+  '/api/updates',
+  express.static(updatesDir, { maxAge: '365d', immutable: true, fallthrough: false })
+);
+
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'Server is running' });
 });
 
 app.use('/api', authRoutes);
 app.use('/api', publicRoutes);
+app.use('/api', appUpdateRoutes);
 app.use('/api', uploadRoutes);
 app.use('/api', artworkRoutes);
 app.use('/api', collectorRoutes);

@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
+    "postinstall": "node scripts/patch-capgo-java17.mjs",
+    "patch:capgo": "node scripts/patch-capgo-java17.mjs",
     "sync": "npx cap sync",
     "copy": "npx cap copy",
     "open": "npx cap open android",
@@ -11,7 +13,8 @@
   "dependencies": {
     "@capacitor/android": "^8.4.1",
     "@capacitor/cli": "^8.4.1",
-    "@capacitor/core": "^8.4.1"
+    "@capacitor/core": "^8.4.1",
+    "@capgo/capacitor-updater": "^8.51.25"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5"

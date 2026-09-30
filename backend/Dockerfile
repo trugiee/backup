@@ -22,6 +22,9 @@ COPY --from=builder /app/prisma ./prisma
 
 RUN mkdir -p /app/uploads
 
+# OTA bundles published by scripts/ota.mjs
+COPY updates/ ./updates/
+
 EXPOSE 3001
 
 CMD ["node", "dist/src/index.js"]

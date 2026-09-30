@@ -7,6 +7,7 @@ services:
       - "3001:3001"
     volumes:
       - ./backend/uploads:/app/uploads
+      - ./backend/updates:/app/updates
     env_file:
       - ./backend/.env
     restart: unless-stopped
