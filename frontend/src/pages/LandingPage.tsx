@@ -19,16 +19,30 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
   };
 
   useEffect(() => {
-    loadPage(0, false)
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    let cancelled = false;
+    fetchPublicArtworks({ take: PAGE_SIZE, skip: 0 })
+      .then(({ artworks: loaded, hasMore: more }) => {
+        if (cancelled) return;
+        setArtworks(loaded);
+        setHasMore(more);
+      })
+      .catch((err) => {
+        console.error('Failed to load artworks:', err);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const onLoadMore = async () => {
     setLoadingMore(true);
     try {
       await loadPage(artworks.length, true);
-    } catch {
+    } catch (err) {
+      console.error('Failed to load more artworks:', err);
     } finally {
       setLoadingMore(false);
     }
