@@ -45,7 +45,7 @@ export default function GalleryPage({ user, token, onLogout }: GalleryPageProps)
           <img
             src="/logo-icon.png"
             alt="Ggallery Logo"
-            className="h-6 sm:h-8 w-auto object-contain"
+            className="h-6 sm:h-8 w-auto object-contain dark:invert"
           />
           <div className="absolute right-4 sm:right-6 flex items-center gap-2 sm:gap-3">
             <span className="text-[10px] sm:text-xs text-zinc-400 dark:text-zinc-500 max-w-[120px] sm:max-w-none truncate">{user?.email}</span>

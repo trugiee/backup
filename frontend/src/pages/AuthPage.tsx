@@ -441,7 +441,7 @@ export default function AuthPage({ onAuth }: AuthPageProps) {
  <img
  src="/logo-white.png"
  alt="Ggallery Logo Large"
- className="w-28 md:w-36 h-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)] transform transition-transform hover:scale-105 duration-700 ease-in-out"
+ className="w-28 md:w-36 h-auto object-contain transform transition-transform hover:scale-105 duration-700 ease-in-out"
  />
  </div>
   </div>

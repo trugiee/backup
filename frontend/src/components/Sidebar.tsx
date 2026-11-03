@@ -50,7 +50,7 @@ export default function Sidebar({
   return (
     <aside className={`hidden sm:flex flex-col w-16 hover:w-[120px] bg-white dark:bg-zinc-900 border-r border-zinc-100 dark:border-zinc-800 sm:sticky sm:top-0 sm:h-screen shrink-0 py-3 group transition-all duration-200 ${className}`}>
       <div className="flex items-center gap-2.5 px-4 h-8 mb-4">
-        {logo && <img src={logo} alt="Ggallery" className="h-5 w-auto object-contain shrink-0" />}
+        {logo && <img src={logo} alt="Ggallery" className="h-5 w-auto object-contain shrink-0 dark:invert" />}
       </div>
 
       <nav className="flex-1 flex flex-col justify-center gap-0.5 px-2">
