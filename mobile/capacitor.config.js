@@ -1,6 +1,6 @@
 const config = {
   appId: 'com.ggallery.app',
-  appName: 'mugna',
+  appName: 'handuraw',
   webDir: '../frontend/dist',
   android: {
     allowMixedContent: true,

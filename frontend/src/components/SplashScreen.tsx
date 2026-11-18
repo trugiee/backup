@@ -42,7 +42,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           />
           <img
             src="/logo.png"
-            alt="mugna"
+            alt="handuraw"
             className={`w-56 sm:w-72 h-auto object-contain transition-all duration-800 ease-out ${
               ready ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-4'
             }`}
@@ -55,7 +55,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
           }`}
         >
           <span className="text-3xl sm:text-4xl font-black tracking-tight text-zinc-900">
-            mugna
+            handuraw
           </span>
         </div>
 

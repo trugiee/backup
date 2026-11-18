@@ -13,7 +13,7 @@ interface AIChatPanelProps {
 
 export default function AIChatPanel({ token, onClose }: AIChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'assistant', text: 'Hello! I\'m Mugna, your gallery curator. Ask me anything about the artworks and artists on display.' },
+    { role: 'assistant', text: 'Hello! I\'m Handuraw, your gallery curator. Ask me anything about the artworks and artists on display.' },
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -107,7 +107,7 @@ export default function AIChatPanel({ token, onClose }: AIChatPanelProps) {
             <img src="/logo-icon.png" alt="" className="w-4 h-4 object-contain hidden dark:block" />
           </div>
           <div>
-            <span className="text-sm font-bold text-zinc-900 dark:text-white">Mugna</span>
+            <span className="text-sm font-bold text-zinc-900 dark:text-white">Handuraw</span>
             <span className="text-[10px] text-zinc-500 dark:text-zinc-400 block leading-tight">Gallery Curator</span>
           </div>
         </div>
