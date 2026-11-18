@@ -65,9 +65,6 @@ export default function LandingPage({ onSignIn }: { onSignIn: () => void }) {
           className="absolute right-0 top-1/2 -translate-y-1/2 w-72 sm:w-96 md:w-[28rem] lg:w-[36rem] opacity-[0.04] pointer-events-none select-none object-contain"
         />
         <div className="relative w-full px-4 py-16 sm:py-32">
-          <p className="text-zinc-400 text-[10px] sm:text-sm font-semibold tracking-widest uppercase mb-2 sm:mb-4">
-            HANDURAW GALLERY
-          </p>
           <h1 className="text-3xl sm:text-6xl lg:text-7xl font-black tracking-[5px] leading-none mb-4 sm:mb-6 font-display">
             Discover{' '}
             Exquisite
