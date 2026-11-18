@@ -2,3 +2,29 @@ node_modules/
 dist/
 .env
 *.local
+
+# Environment
+.env.*
+!.env.example
+
+# Uploads: stored in Cloudinary. Files already committed stay tracked;
+# new local uploads are not added.
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Android / Capacitor build output
+mobile/android/.gradle/
+mobile/android/build/
+mobile/android/app/build/
+mobile/android/local.properties
+mobile/android/captures/
+mobile/android/.idea/
+*.apk.idsig
+
+# Logs, OS and editor files
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
