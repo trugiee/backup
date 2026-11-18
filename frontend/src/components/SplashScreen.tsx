@@ -54,7 +54,7 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
             ready ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <span className="font-display text-3xl sm:text-4xl font-extralight uppercase tracking-[0.3em] text-zinc-900">
+          <span className="font-display text-3xl sm:text-4xl font-light uppercase tracking-[0.3em] text-zinc-900">
             HANDURAW
           </span>
         </div>
