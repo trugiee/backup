@@ -1,4 +1,7 @@
-import type { Artwork, User, Report } from '../types';
+import type { Achievement, Artwork, Exhibitor, Message, Notification, Report, SoldArtwork, User } from '../types';
+
+/** Request bodies are plain JSON objects; the server validates their contents. */
+export type JsonBody = Record<string, unknown>;
 
 const BASE = import.meta.env.VITE_API_URL || '/api';
 
@@ -57,7 +60,7 @@ export function fetchMyArtworks(token: string): Promise<Artwork[]> {
   return fetchJson(`${BASE}/my/artworks`, { headers: getAuthHeaders(token) });
 }
 
-export function updateArtwork(token: string, id: string, body: any): Promise<any> {
+export function updateArtwork(token: string, id: string, body: JsonBody): Promise<Artwork> {
   return fetchJson(`${BASE}/artworks/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -82,11 +85,11 @@ export function uploadImage(token: string, file: File): Promise<{ imageUrl: stri
   });
 }
 
-export function fetchMyAchievements(token: string): Promise<any[]> {
+export function fetchMyAchievements(token: string): Promise<Achievement[]> {
   return fetchJson(`${BASE}/achievements`, { headers: getAuthHeaders(token) });
 }
 
-export function createAchievement(token: string, body: any): Promise<any> {
+export function createAchievement(token: string, body: JsonBody): Promise<Achievement> {
   return fetchJson(`${BASE}/achievements`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -101,7 +104,7 @@ export function deleteAchievement(token: string, id: string): Promise<void> {
   });
 }
 
-export function updateExhibitor(token: string, id: string, body: any): Promise<any> {
+export function updateExhibitor(token: string, id: string, body: JsonBody): Promise<Exhibitor> {
   return fetchJson(`${BASE}/exhibitors/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -109,11 +112,11 @@ export function updateExhibitor(token: string, id: string, body: any): Promise<a
   });
 }
 
-export function fetchMySoldArtworks(token: string): Promise<any[]> {
+export function fetchMySoldArtworks(token: string): Promise<SoldArtwork[]> {
   return fetchJson(`${BASE}/my/sold-artworks`, { headers: getAuthHeaders(token) });
 }
 
-export function updateCollector(token: string, id: string, body: any): Promise<any> {
+export function updateCollector(token: string, id: string, body: JsonBody): Promise<User> {
   return fetchJson(`${BASE}/collectors/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -142,33 +145,42 @@ export function fetchAdminStats(token: string): Promise<AdminStats> {
   return fetchJson(`${BASE}/admin/stats`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchPendingAchievements(token: string): Promise<any[]> {
+export function fetchPendingAchievements(token: string): Promise<Achievement[]> {
   return fetchJson(`${BASE}/admin/achievements/pending`, { headers: getAuthHeaders(token) });
 }
 
-export function verifyAchievement(token: string, id: string): Promise<any> {
+export function verifyAchievement(token: string, id: string): Promise<Achievement> {
   return fetchJson(`${BASE}/admin/achievements/${id}/verify`, {
     method: 'PUT',
     headers: getAuthHeaders(token),
   });
 }
 
-export function fetchAdminUsers(token: string): Promise<any> {
+export interface AdminUserRow {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  role: 'exhibitor' | 'collector';
+  _count: { artworks?: number; soldArtworks?: number };
+}
+
+export function fetchAdminUsers(token: string): Promise<{ exhibitors: AdminUserRow[]; collectors: AdminUserRow[] }> {
   return fetchJson(`${BASE}/admin/users`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchPendingExhibitorRequests(token: string): Promise<any[]> {
+export function fetchPendingExhibitorRequests(token: string): Promise<(Exhibitor & { phone?: string; address?: string; createdAt: string })[]> {
   return fetchJson(`${BASE}/admin/exhibitors/pending`, { headers: getAuthHeaders(token) });
 }
 
-export function approveExhibitorRequest(token: string, id: string): Promise<any> {
+export function approveExhibitorRequest(token: string, id: string): Promise<{ message: string; exhibitor: Exhibitor }> {
   return fetchJson(`${BASE}/admin/exhibitors/approve/${id}`, {
     method: 'PUT',
     headers: getAuthHeaders(token),
   });
 }
 
-export function rejectExhibitorRequest(token: string, id: string): Promise<any> {
+export function rejectExhibitorRequest(token: string, id: string): Promise<{ message: string }> {
   return fetchJson(`${BASE}/admin/exhibitors/reject/${id}`, {
     method: 'PUT',
     headers: getAuthHeaders(token),
@@ -224,7 +236,7 @@ export function fetchExhibitorStats(token: string): Promise<ExhibitorStats> {
 export function sendMessage(
   token: string,
   body: { exhibitorId: string; content: string; artworkId?: string; artworkType?: string }
-): Promise<any> {
+): Promise<Message> {
   return fetchJson(`${BASE}/messages`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -235,7 +247,7 @@ export function sendMessage(
 export function replyMessage(
   token: string,
   body: { collectorId: string; content: string }
-): Promise<any> {
+): Promise<Message> {
   return fetchJson(`${BASE}/messages/reply`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -243,17 +255,24 @@ export function replyMessage(
   });
 }
 
-export function fetchConversation(token: string, exhibitorId: string): Promise<any[]> {
+export function fetchConversation(token: string, exhibitorId: string): Promise<Message[]> {
   return fetchJson(`${BASE}/messages/conversation/${exhibitorId}`, {
     headers: getAuthHeaders(token),
   });
 }
 
-export function fetchInbox(token: string): Promise<any[]> {
+export interface InboxThread {
+  collector: NonNullable<Message['collector']> & { email?: string; bio?: string | null; phone?: string | null; createdAt?: string };
+  lastMessage: Message;
+  unread: number;
+  messages: Message[];
+}
+
+export function fetchInbox(token: string): Promise<InboxThread[]> {
   return fetchJson(`${BASE}/messages/inbox`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchMyConversations(token: string): Promise<any[]> {
+export function fetchMyConversations(token: string): Promise<Message[]> {
   return fetchJson(`${BASE}/messages/my-conversations`, { headers: getAuthHeaders(token) });
 }
 
@@ -261,13 +280,13 @@ export function fetchExhibitors(token: string): Promise<{ id: string; name: stri
   return fetchJson(`${BASE}/exhibitors`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchExhibitorProfile(exhibitorId: string): Promise<any> {
+export function fetchExhibitorProfile(exhibitorId: string): Promise<{ exhibitor: Exhibitor; artworks: Artwork[]; achievements: Achievement[] }> {
   return fetchJson(`${BASE}/exhibitors/${exhibitorId}/profile`);
 }
 
 // --- Notifications ---
 
-export function createNotification(token: string, body: { title: string; message: string; target: string }): Promise<any> {
+export function createNotification(token: string, body: { title: string; message: string; target: string }): Promise<Notification> {
   return fetchJson(`${BASE}/admin/notifications`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
@@ -275,7 +294,7 @@ export function createNotification(token: string, body: { title: string; message
   });
 }
 
-export function fetchNotifications(token: string, role: string): Promise<any[]> {
+export function fetchNotifications(token: string, role: string): Promise<Notification[]> {
   return fetchJson(`${BASE}/notifications/${role}`, { headers: getAuthHeaders(token) });
 }
 
@@ -330,7 +349,7 @@ export function createArtworkListingCheckout(token: string): Promise<{ checkoutU
   });
 }
 
-export function confirmAndCreateArtwork(token: string, paymentId: string, artworkData: any): Promise<{ artwork: any; message: string }> {
+export function confirmAndCreateArtwork(token: string, paymentId: string, artworkData: JsonBody): Promise<{ artwork: Artwork; message: string }> {
   return fetchJson(`${BASE}/payments/confirm-and-create`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...getAuthHeaders(token) },
