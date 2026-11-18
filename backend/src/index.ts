@@ -21,6 +21,7 @@ import paymentRoutes from './routes/payments';
 import aiRoutes from './routes/ai';
 import reportRoutes from './routes/reports';
 import appUpdateRoutes from './routes/appUpdate';
+import prisma from './lib/prisma';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -44,6 +45,18 @@ app.use(
 
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', message: 'Server is running' });
+});
+
+// Touches the database so Supabase doesn't pause the project for inactivity.
+// Called daily by .github/workflows/keepalive.yml.
+app.get('/api/health/db', async (_req: Request, res: Response) => {
+  try {
+    await prisma.$queryRaw`SELECT 1`;
+    res.json({ status: 'ok', db: 'up' });
+  } catch (err) {
+    console.error('DB health check failed:', err);
+    res.status(503).json({ status: 'error', db: 'down' });
+  }
 });
 
 app.use('/api', authRoutes);
