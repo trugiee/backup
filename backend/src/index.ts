@@ -1,5 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -30,8 +31,50 @@ const PORT = process.env.PORT || 3001;
 // URL, otherwise req.protocol reports http and the download is blocked.
 app.set('trust proxy', true);
 
-app.use(cors());
-app.use(express.json());
+// Browsers may only call the API from these origins. Set FRONTEND_URL (comma
+// separated for several sites). The Android app's WebView origins are always allowed.
+const allowedOrigins = (process.env.FRONTEND_URL || '')
+  .split(',')
+  .map((o) => o.trim().replace(/\/$/, ''))
+  .filter(Boolean)
+  .concat(['https://localhost', 'capacitor://localhost', 'http://localhost', 'http://localhost:5173']);
+
+if (!process.env.FRONTEND_URL) {
+  console.warn('FRONTEND_URL is not set: CORS is open to every origin.');
+}
+
+export const corsOrigin: cors.CorsOptions['origin'] = (origin, callback) => {
+  // No Origin header = non-browser client (curl, server-to-server, webhooks).
+  if (!origin || !process.env.FRONTEND_URL || allowedOrigins.includes(origin)) {
+    callback(null, true);
+  } else {
+    callback(null, false);
+  }
+};
+
+app.use(cors({ origin: corsOrigin }));
+
+// Keep the raw body so the PayMongo webhook signature can be verified.
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      (req as any).rawBody = buf;
+    },
+  })
+);
+
+// Slow down password guessing and email spam on the auth endpoints.
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 30,
+  standardHeaders: 'draft-7',
+  legacyHeaders: false,
+  message: { error: 'Too many attempts. Please try again in a few minutes.' },
+});
+app.use(
+  ['/api/login', '/api/auth/google', '/api/register', '/api/forgot-password', '/api/auth/change-password'],
+  authLimiter
+);
 
 const uploadDir = path.join(process.cwd(), 'uploads');
 app.use('/uploads', express.static(uploadDir));
@@ -96,7 +139,7 @@ import { Server } from 'socket.io';
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: corsOrigin as any,
     methods: ['GET', 'POST']
   }
 });

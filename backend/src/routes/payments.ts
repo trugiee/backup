@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client';
 import { authMiddleware } from '../middleware/auth';
 
@@ -185,8 +186,44 @@ router.post('/payments/confirm-and-create', authMiddleware, async (req: Request,
   }
 });
 
+// PayMongo signs each webhook: header "Paymongo-Signature: t=<ts>,te=<test sig>,li=<live sig>"
+// where sig = HMAC-SHA256(webhook secret, `${t}.${raw body}`).
+function isValidPaymongoSignature(req: Request): boolean {
+  const secret = process.env.PAYMONGO_WEBHOOK_SECRET;
+  const rawBody: Buffer | undefined = (req as any).rawBody;
+  const header = req.headers['paymongo-signature'];
+  if (!secret || !rawBody || typeof header !== 'string') return false;
+
+  const parts: Record<string, string> = {};
+  for (const part of header.split(',')) {
+    const [k, ...v] = part.split('=');
+    parts[k.trim()] = v.join('=').trim();
+  }
+  const timestamp = parts.t;
+  if (!timestamp) return false;
+
+  const livemode = req.body?.data?.attributes?.livemode === true;
+  const provided = livemode ? parts.li : parts.te;
+  if (!provided) return false;
+
+  const expected = crypto
+    .createHmac('sha256', secret)
+    .update(`${timestamp}.${rawBody.toString('utf8')}`)
+    .digest('hex');
+
+  const a = Buffer.from(expected);
+  const b = Buffer.from(provided);
+  return a.length === b.length && crypto.timingSafeEqual(a, b);
+}
+
 router.post('/payments/webhook', async (req: Request, res: Response) => {
   try {
+    if (!isValidPaymongoSignature(req)) {
+      console.warn('Rejected PayMongo webhook with invalid or missing signature');
+      res.status(401).json({ error: 'Invalid signature' });
+      return;
+    }
+
     const event = req.body;
     const eventType = event.data?.attributes?.type;
 

@@ -7,7 +7,7 @@ import { authMiddleware } from '../middleware/auth';
 import { sendEmail, buildNotificationEmail } from '../lib/mail';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'ggallery_secret_key';
+import { JWT_SECRET } from '../lib/config';
 
 router.post('/login', async (req: Request, res: Response) => {
   try {

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify, JwtPayload } from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'ggallery_secret_key';
+import { JWT_SECRET } from '../lib/config';
 
 export interface AuthUser extends JwtPayload {
   id: string;

@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 import prisma from '../lib/prisma';
 
 const router = Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'ggallery_secret_key';
+import { JWT_SECRET } from '../lib/config';
 
 function auth(req: Request, res: Response): any | null {
   const header = req.headers.authorization;
