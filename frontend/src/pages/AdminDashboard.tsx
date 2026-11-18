@@ -6,6 +6,8 @@ import { useToast } from '../components/Toast';
 import { useConfirm } from '../components/ConfirmDialog';
 import { fetchAdminStats, fetchPendingAchievements, verifyAchievement, fetchAdminUsers, fetchPendingExhibitorRequests, approveExhibitorRequest, rejectExhibitorRequest, createNotification, fetchAdminSettings, updateAdminSettings, fetchAdminReports, resolveReport } from '../api';
 import Sidebar from '../components/Sidebar';
+import BottomNav from '../components/BottomNav';
+import { navIcons } from '../components/navIcons';
 import ExhibitorProfileView from '../components/ExhibitorProfileView';
 import CollectorProfileModal from '../components/CollectorProfileModal';
 import SettingsModal from '../components/SettingsModal';
@@ -626,80 +628,27 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
         </div>
 
       {/* Mobile bottom nav */}
-      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 z-50 px-1 pb-safe">
-        <div className="flex items-center justify-between h-14 w-full">
-          {([
-            { tab: 'overview' as AdminTab, label: 'Overview', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-            { tab: 'management' as AdminTab, label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
-            { tab: 'notifications' as AdminTab, label: 'Notifs', icon: 'M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0' },
-            { tab: 'reports' as AdminTab, label: 'Reports', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z' },
-            { tab: 'settings' as AdminTab, label: 'Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
-          ]).map(({ tab, label, icon }) => (
-            <button
-              key={tab}
-              onClick={() => { setActiveTab(tab); setMobileMenuOpen(false); }}
-              className={`flex flex-col items-center gap-0.5 px-2 py-1 transition-all ${ activeTab === tab ? 'text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 dark:text-zinc-500' }`}
-            >
-              <div className={`p-1.5 rounded-lg ${activeTab === tab ? 'bg-zinc-100 dark:bg-zinc-800' : ''}`}>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-                </svg>
-              </div>
-              <span className="text-[10px] font-medium">{label}</span>
-            </button>
-          ))}
-          <div className="relative">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`flex flex-col items-center gap-0.5 px-2 py-1 transition-all ${ mobileMenuOpen ? 'text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 dark:text-zinc-500' }`}
-            >
-              <div className={`p-1.5 rounded-lg ${mobileMenuOpen ? 'bg-zinc-100 dark:bg-zinc-800' : ''}`}>
-                <div className="w-5 h-5 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-zinc-500 text-[9px] font-bold overflow-hidden">
-                  {(user.name || user.email).charAt(0).toUpperCase()}
-                </div>
-              </div>
-              <span className="text-[10px] font-medium">Account</span>
-            </button>
-            {mobileMenuOpen && (
-              <div className="absolute bottom-full mb-2 right-0 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-xl shadow-lg py-2 w-44 flex flex-col overflow-hidden">
-                <div className="px-3 pb-2 mb-1 border-b border-zinc-100 dark:border-zinc-800">
-                  <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">{user.name || 'User'}</p>
-                  <p className="text-[11px] text-zinc-400 dark:text-zinc-500 mt-0.5 truncate">{user.email}</p>
-                  <span className="inline-block mt-1.5 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded uppercase tracking-wider">{user.role}</span>
-                </div>
-                <button
-                  onClick={() => { setActiveTab('overview'); setMobileMenuOpen(false); }}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors mx-1 rounded-lg"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  Profile
-                </button>
-                <button
-                  onClick={() => { setActiveTab('settings'); setMobileMenuOpen(false); }}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors mx-1 rounded-lg"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  Settings
-                </button>
-                <div className="border-t border-zinc-100 dark:border-zinc-800 mx-1 my-1" />
-                <button
-                  onClick={() => { onLogout(); setMobileMenuOpen(false); }}
-                  className="flex items-center gap-2 px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors mx-1 rounded-lg"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </nav>
+      <BottomNav
+        tabs={[
+          { id: 'overview', label: 'Overview', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+          { id: 'management', label: 'Users', icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z' },
+          { id: 'notifications', label: 'Notifs', icon: 'M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0' },
+          { id: 'reports', label: 'Reports', icon: 'M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z' },
+          { id: 'settings', label: 'Settings', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.066 2.573c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.573 1.066c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.066-2.573c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z' },
+        ]}
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab as AdminTab)}
+        user={user}
+        avatarInitial
+        menuOpen={mobileMenuOpen}
+        onMenuOpenChange={setMobileMenuOpen}
+        navRef={mobileNavRef}
+        menuItems={[
+          { label: 'Profile', icon: navIcons.profile, onClick: () => setActiveTab('overview') },
+          { label: 'Settings', icon: navIcons.settings, onClick: () => setActiveTab('settings') },
+          { label: 'Logout', icon: navIcons.logout, tone: 'danger', onClick: onLogout },
+        ]}
+      />
 
       {viewingProfile?.role === 'exhibitor' && (
         <ExhibitorProfileView

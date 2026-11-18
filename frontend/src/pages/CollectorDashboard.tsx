@@ -14,6 +14,8 @@ import type { ConversationThread } from '../api';
 import ArtworkModal from '../components/ArtworkModal';
 import ChatDrawer from '../components/ChatDrawer';
 import Sidebar from '../components/Sidebar';
+import BottomNav from '../components/BottomNav';
+import { navIcons } from '../components/navIcons';
 import SettingsModal from '../components/SettingsModal';
 import ArtworkGallery from '../components/ArtworkGallery';
 import { io } from 'socket.io-client';
@@ -643,89 +645,26 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       )}
 
       {/* Mobile bottom nav */}
-      <nav ref={mobileNavRef} className="sm:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-700 z-50 px-1 pb-safe">
-        <div className="flex items-center justify-around h-16">
-          {([
-            { tab: 'browse' as DashboardTab, label: 'Gallery', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
-            { tab: 'messages' as DashboardTab, label: 'Messages', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
-          ]).map(({ tab, label, icon }) => (
-            <button
-              key={tab}
-              onClick={() => { if (tab === 'messages') loadConversations(); setDashboardTab(tab); setMobileMenuOpen(false); }}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-all ${ dashboardTab === tab ? 'text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 dark:text-zinc-400' }`}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
-              </svg>
-              <span className="text-[10px] font-medium">{label}</span>
-            </button>
-          ))}
-
-          <div className="relative">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg transition-all ${ mobileMenuOpen ? 'text-zinc-900 dark:text-zinc-100' : 'text-zinc-400 dark:text-zinc-400' }`}
-            >
-              <div className="w-5 h-5 rounded-full bg-zinc-300 flex items-center justify-center text-zinc-600 dark:text-zinc-400 text-[9px] font-bold overflow-hidden">
-                {user.profilePicture ? (
-                  <img src={user.profilePicture} alt="" className="w-full h-full object-cover" />
-                ) : (
-                  <img src="/spiral.webp" alt="" className="w-full h-full object-cover" />
-                )}
-              </div>
-              <span className="text-[10px] font-medium">Account</span>
-            </button>
-            {mobileMenuOpen && (
-              <div className="absolute bottom-full mb-1 right-0 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-xl py-2 w-48 flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-2 duration-150">
-                <div className="px-3 pb-2 mb-1 border-b border-zinc-100 dark:border-zinc-800">
-                  <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">{user.name || 'User'}</p>
-                  <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">{user.email}</p>
-                  <span className="inline-block mt-1.5 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded uppercase tracking-wider">{user.role}</span>
-                </div>
-                <button
-                  onClick={() => { setDashboardTab('profile'); setMobileMenuOpen(false); }}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors mx-1 rounded-lg"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                  </svg>
-                  Profile
-                </button>
-                {user.isDualRole ? (
-                  <button
-                    onClick={() => { setUser({ ...user, role: 'exhibitor' }); setMobileMenuOpen(false); }}
-                    className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors mx-1 rounded-lg"
-                  >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                    </svg>
-                    Switch Role
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => { setMobileMenuOpen(false); setShowExhibitorPrompt(true); }}
-                    className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors mx-1 rounded-lg"
-                  >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                    Upgrade Account
-                  </button>
-                )}
-                <button
-                  onClick={() => { onLogout(); setMobileMenuOpen(false); }}
-                  className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors mx-1 rounded-lg"
-                >
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                  </svg>
-                  Logout
-                </button>
-              </div>
-            )}
-          </div>
-        </div>
-      </nav>
+      <BottomNav
+        tabs={[
+          { id: 'browse', label: 'Gallery', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6' },
+          { id: 'messages', label: 'Messages', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
+        ]}
+        activeTab={dashboardTab}
+        onTabChange={(tab) => { if (tab === 'messages') loadConversations(); setDashboardTab(tab as DashboardTab); }}
+        user={user}
+        hasUnread={unreadNotifs.length > 0}
+        menuOpen={mobileMenuOpen}
+        onMenuOpenChange={setMobileMenuOpen}
+        navRef={mobileNavRef}
+        menuItems={[
+          { label: 'Profile', icon: navIcons.profile, onClick: () => setDashboardTab('profile') },
+          user.isDualRole
+            ? { label: 'Switch Role', icon: navIcons.switchRole, tone: 'accent', onClick: () => setUser({ ...user, role: 'exhibitor' }) }
+            : { label: 'Upgrade Account', icon: navIcons.upgrade, tone: 'accent', onClick: () => setShowExhibitorPrompt(true) },
+          { label: 'Logout', icon: navIcons.logout, tone: 'danger', onClick: onLogout },
+        ]}
+      />
       </div>
     </div>
   );

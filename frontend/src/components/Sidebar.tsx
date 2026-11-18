@@ -20,6 +20,10 @@ interface SidebarProps {
   user?: User;
 }
 
+/**
+ * Desktop navigation rail. It keeps a fixed 64px footprint in the page layout and
+ * expands over the content on hover or keyboard focus, so the page never shifts.
+ */
 export default function Sidebar({
   tabs,
   activeTab,
@@ -48,77 +52,100 @@ export default function Sidebar({
   }, [menuOpen]);
 
   return (
-    <aside className={`hidden sm:flex flex-col w-16 hover:w-[120px] bg-white dark:bg-zinc-900 border-r border-zinc-100 dark:border-zinc-800 sm:sticky sm:top-0 sm:h-screen shrink-0 py-3 group transition-all duration-200 ${className}`}>
-      <div className="flex items-center gap-2.5 px-4 h-8 mb-4">
-        {logo && <img src={logo} alt="Ggallery" className="h-5 w-auto object-contain shrink-0 dark:invert" />}
-      </div>
+    <aside className={`hidden sm:block w-16 shrink-0 sticky top-0 h-screen z-40 ${className}`}>
+      <div className="group absolute inset-y-0 left-0 flex w-16 flex-col border-r border-zinc-200 bg-white/95 py-3 backdrop-blur transition-[width,box-shadow] duration-200 hover:w-52 hover:shadow-xl focus-within:w-52 focus-within:shadow-xl dark:border-zinc-800 dark:bg-zinc-900/95">
+        <div className="mb-5 flex h-9 items-center gap-3 px-5">
+          {logo && <img src={logo} alt="Handuraw" className="h-6 w-auto shrink-0 object-contain dark:invert" />}
+          <span className="whitespace-nowrap text-xs font-light uppercase tracking-[0.3em] text-zinc-900 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100 dark:text-zinc-100 font-display">
+            Handuraw
+          </span>
+        </div>
 
-      <nav className="flex-1 flex flex-col justify-center gap-0.5 px-2">
-        {tabs.map(tab => (
-          <button
-            key={tab.id}
-            onClick={() => onTabChange(tab.id)}
-            className={`relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all ${ activeTab === tab.id ? 'bg-zinc-900 text-white' : 'text-black dark:text-zinc-100 hover:text-black dark:hover:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800' }`}
-          >
-            <div className="relative shrink-0">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d={tab.icon} />
-              </svg>
-              {tab.id === 'messages' && unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-blue-500 rounded-full" />
-              )}
-            </div>
-            <span className="text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">{tab.label}</span>
-          </button>
-        ))}
-      </nav>
-
-      <div ref={menuRef} className="relative mt-auto pt-3 border-t border-zinc-100 dark:border-zinc-800 px-2">
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="flex items-center gap-3 w-full px-3 py-2 rounded-xl hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-all"
-        >
-          <div className="w-7 h-7 rounded-full bg-zinc-200 dark:bg-zinc-700 flex items-center justify-center text-zinc-500 dark:text-zinc-400 text-[10px] font-bold overflow-hidden ring-1 ring-zinc-200 dark:ring-zinc-700 shrink-0">
-            {user?.profilePicture ? (
-              <img src={user.profilePicture} alt="" className="w-full h-full object-cover" />
-            ) : (
-              <img src="/spiral.webp" alt="" className="w-full h-full object-cover" />
-            )}
-          </div>
-          <div className="text-left min-w-0 flex-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap overflow-hidden">
-            <p className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 truncate leading-tight">{user?.name || 'User'}</p>
-          </div>
-        </button>
-
-        {menuOpen && (
-          <div className="absolute bottom-0 left-full ml-3 w-52 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-700 rounded-2xl shadow-2xl py-2 flex flex-col overflow-hidden z-50 animate-in fade-in slide-in-from-left-2 duration-150">
-            <div className="px-3 pb-2 mb-1 border-b border-zinc-100 dark:border-zinc-800">
-              <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">{user?.name || 'User'}</p>
-              <p className="text-[10px] text-zinc-400 dark:text-zinc-500 mt-0.5">{user?.email}</p>
-              <span className="inline-block mt-1.5 text-[9px] font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-100 dark:bg-zinc-800 px-1.5 py-0.5 rounded uppercase tracking-wider">{user?.role}</span>
-            </div>
-            {isDualRole && onSwitchRole && (
+        <nav aria-label="Main" className="flex flex-1 flex-col justify-center gap-1 px-2">
+          {tabs.map((tab) => {
+            const active = activeTab === tab.id;
+            return (
               <button
-                onClick={() => { onSwitchRole(); setMenuOpen(false); }}
-                className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors mx-1 rounded-lg"
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                aria-label={tab.label}
+                aria-current={active ? 'page' : undefined}
+                className={`relative flex h-10 items-center gap-3 rounded-xl px-3.5 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 ${
+                  active
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
+                    : 'text-zinc-500 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100'
+                }`}
               >
-                <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                </svg>
-                Switch Role
+                <span className="relative shrink-0">
+                  <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.75">
+                    <path strokeLinecap="round" strokeLinejoin="round" d={tab.icon} />
+                  </svg>
+                  {tab.id === 'messages' && unreadCount > 0 && (
+                    <span className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-blue-500 ring-2 ring-white dark:ring-zinc-900" />
+                  )}
+                </span>
+                <span className="whitespace-nowrap text-xs font-semibold opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+                  {tab.label}
+                </span>
               </button>
-            )}
-            <button
-              onClick={() => { onLogout(); setMenuOpen(false); }}
-              className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors mx-1 rounded-lg"
+            );
+          })}
+        </nav>
+
+        <div ref={menuRef} className="relative mt-auto border-t border-zinc-100 px-2 pt-3 dark:border-zinc-800">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            aria-label="Account menu"
+            className="flex h-11 w-full items-center gap-3 rounded-xl px-2.5 transition-colors hover:bg-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 dark:hover:bg-zinc-800"
+          >
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full bg-zinc-200 ring-1 ring-zinc-200 dark:bg-zinc-700 dark:ring-zinc-700">
+              <img src={user?.profilePicture || '/spiral.webp'} alt="" className="h-full w-full object-cover" />
+            </span>
+            <span className="min-w-0 flex-1 overflow-hidden text-left opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
+              <span className="block truncate text-xs font-semibold leading-tight text-zinc-800 dark:text-zinc-200">{user?.name || 'User'}</span>
+              <span className="block truncate text-[10px] capitalize leading-tight text-zinc-400 dark:text-zinc-500">{user?.role}</span>
+            </span>
+          </button>
+
+          {menuOpen && (
+            <div
+              role="menu"
+              className="absolute bottom-0 left-full z-50 ml-3 flex w-56 flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-white py-2 shadow-2xl animate-in fade-in slide-in-from-left-2 duration-150 dark:border-zinc-700 dark:bg-zinc-900"
             >
-              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              Logout
-            </button>
-          </div>
-        )}
+              <div className="mb-1 border-b border-zinc-100 px-3 pb-2 dark:border-zinc-800">
+                <p className="text-xs font-semibold leading-tight text-zinc-900 dark:text-zinc-100">{user?.name || 'User'}</p>
+                <p className="mt-0.5 truncate text-[10px] text-zinc-400 dark:text-zinc-500">{user?.email}</p>
+                <span className="mt-1.5 inline-block rounded bg-zinc-100 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                  {user?.role}
+                </span>
+              </div>
+              {isDualRole && onSwitchRole && (
+                <button
+                  role="menuitem"
+                  onClick={() => { onSwitchRole(); setMenuOpen(false); }}
+                  className="mx-1 flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-amber-600 transition-colors hover:bg-amber-50 dark:hover:bg-amber-950/30"
+                >
+                  <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                  </svg>
+                  Switch Role
+                </button>
+              )}
+              <button
+                role="menuitem"
+                onClick={() => { onLogout(); setMenuOpen(false); }}
+                className="mx-1 flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-red-500 transition-colors hover:bg-red-50 dark:hover:bg-red-950/30"
+              >
+                <svg className="h-3.5 w-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </aside>
   );
