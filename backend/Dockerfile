@@ -2,7 +2,9 @@ FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm ci
+# multer-storage-cloudinary still declares a cloudinary v1 peer dependency while
+# the app uses v2, so a plain `npm ci` stops with ERESOLVE.
+RUN npm ci --legacy-peer-deps
 
 COPY prisma/ ./prisma/
 RUN npx prisma generate
