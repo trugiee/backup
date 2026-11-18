@@ -40,7 +40,7 @@ export interface Artwork {
   status: string;
   imageUrl?: string;
   media?: ArtworkMedia[];
-  attributes?: Record<string, any>;
+  attributes?: Record<string, string | number>;
   createdAt: string;
   exhibitor?: Exhibitor | null;
   contributors?: ArtworkContributor[];
@@ -107,4 +107,6 @@ export interface User {
   theme?: string;
   isPendingExhibitor?: boolean;
   isDualRole?: boolean;
+  phone?: string | null;
+  address?: string | null;
 }

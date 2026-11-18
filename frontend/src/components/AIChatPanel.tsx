@@ -36,7 +36,7 @@ export default function AIChatPanel({ token, onClose }: AIChatPanelProps) {
       const history = messages.map(m => ({ role: m.role, text: m.text }));
       const res = await chatWithCurator(token || '', text, history);
       setMessages(prev => [...prev, { role: 'assistant', text: res.reply }]);
-    } catch (err: any) {
+    } catch {
       setMessages(prev => [...prev, { role: 'assistant', text: 'Sorry, I couldn\'t reach the gallery archives. Please try again.' }]);
     } finally {
       setLoading(false);

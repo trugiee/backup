@@ -19,7 +19,7 @@ interface AddArtworkFormProps {
 }
 
 export default function AddArtworkForm({ token, onClose, onCreated }: AddArtworkFormProps) {
-  const [form, setForm] = useState<any>({
+  const [form, setForm] = useState<Record<string, string>>({
     title: '', type: 'painting', yearCreated: '', style: '', description: '', price: '', status: 'Available',
     medium: '', canvasType: '', material: '', height: '', width: '', depth: '', weight: '',
   });
@@ -116,7 +116,7 @@ export default function AddArtworkForm({ token, onClose, onCreated }: AddArtwork
       }
     }
 
-    const attrs: Record<string, any> = {};
+    const attrs: Record<string, string | number> = {};
     if (form.type === 'painting') {
       if (form.medium) attrs.medium = form.medium;
       if (form.canvasType) attrs.canvasType = form.canvasType;
@@ -128,7 +128,7 @@ export default function AddArtworkForm({ token, onClose, onCreated }: AddArtwork
     if (form.depth) attrs.depth = parseFloat(form.depth);
     if (form.weight) attrs.weight = parseFloat(form.weight);
 
-    const body: any = {
+    const body: Record<string, unknown> = {
       title: form.title,
       type: form.type,
       style: form.style || undefined,
@@ -160,8 +160,8 @@ export default function AddArtworkForm({ token, onClose, onCreated }: AddArtwork
         onCreated();
         onClose();
       }
-    } catch (err: any) {
-      setError(err.message || 'Failed to publish');
+    } catch (err) {
+      setError((err instanceof Error && err.message) || 'Failed to publish');
     } finally {
       setSaving(false);
     }

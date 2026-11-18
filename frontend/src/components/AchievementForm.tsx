@@ -53,8 +53,8 @@ export default function AchievementForm({ token, onClose, onCreated }: Achieveme
 
       onCreated();
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Failed to add achievement');
+    } catch (err) {
+      setError((err instanceof Error && err.message) || 'Failed to add achievement');
     } finally {
       setSaving(false);
     }

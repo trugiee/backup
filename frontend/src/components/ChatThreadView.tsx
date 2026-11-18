@@ -36,8 +36,8 @@ export default function ChatThreadView({
     try {
       await onSendMessage(input.trim());
       setInput('');
-    } catch (err: any) {
-      toast(err.message || 'Failed to send message', 'error');
+    } catch (err) {
+      toast((err instanceof Error && err.message) || 'Failed to send message', 'error');
     } finally {
       setSending(false);
     }

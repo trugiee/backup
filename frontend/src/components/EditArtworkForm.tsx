@@ -30,21 +30,21 @@ export default function EditArtworkForm({ artwork, token, onClose, onUpdated }: 
   const attrs = artwork.attributes || {};
   const initial = splitMedia(artwork);
 
-  const [form, setForm] = useState<any>({
+  const [form, setForm] = useState<Record<string, string>>({
     title: artwork.title || '',
     type: artwork.type || 'painting',
-    yearCreated: artwork.yearCreated || '',
+    yearCreated: String(artwork.yearCreated || ''),
     style: artwork.style || '',
     description: artwork.description || '',
-    price: artwork.price ?? '',
+    price: String(artwork.price ?? ''),
     status: artwork.status || 'Available',
-    medium: attrs.medium || '',
-    canvasType: attrs.canvasType || '',
-    material: attrs.material || '',
-    height: attrs.height || '',
-    width: attrs.width || '',
-    depth: attrs.depth || '',
-    weight: attrs.weight || '',
+    medium: String(attrs.medium || ''),
+    canvasType: String(attrs.canvasType || ''),
+    material: String(attrs.material || ''),
+    height: String(attrs.height || ''),
+    width: String(attrs.width || ''),
+    depth: String(attrs.depth || ''),
+    weight: String(attrs.weight || ''),
   });
   const [primaryFile, setPrimaryFile] = useState<File | null>(null);
   const [primaryUrl, setPrimaryUrl] = useState(initial.primaryUrl);
@@ -134,7 +134,7 @@ export default function EditArtworkForm({ artwork, token, onClose, onUpdated }: 
       }
     }
 
-    const attrs: Record<string, any> = {};
+    const attrs: Record<string, string | number> = {};
     if (form.type === 'painting') {
       if (form.medium) attrs.medium = form.medium;
       if (form.canvasType) attrs.canvasType = form.canvasType;
@@ -146,7 +146,7 @@ export default function EditArtworkForm({ artwork, token, onClose, onUpdated }: 
     if (form.depth) attrs.depth = parseFloat(form.depth);
     if (form.weight) attrs.weight = parseFloat(form.weight);
 
-    const body: any = {
+    const body: Record<string, unknown> = {
       title: form.title,
       type: form.type,
       style: form.style || undefined,
@@ -164,8 +164,8 @@ export default function EditArtworkForm({ artwork, token, onClose, onUpdated }: 
       await updateArtwork(token, artwork.id, body);
       onUpdated();
       onClose();
-    } catch (err: any) {
-      setError(err.message || 'Failed to update');
+    } catch (err) {
+      setError((err instanceof Error && err.message) || 'Failed to update');
     } finally {
       setSaving(false);
     }

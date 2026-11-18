@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import type { User, Achievement, Report } from '../types';
-import type { AdminStats } from '../api';
+import type { AdminStats, AdminUserRow, PendingExhibitorRequest } from '../api';
 import { useToast } from '../components/Toast';
 import { useConfirm } from '../components/ConfirmDialog';
 import { fetchAdminStats, fetchPendingAchievements, verifyAchievement, fetchAdminUsers, fetchPendingExhibitorRequests, approveExhibitorRequest, rejectExhibitorRequest, createNotification, fetchAdminSettings, updateAdminSettings, fetchAdminReports, resolveReport } from '../api';
@@ -36,8 +36,8 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
 
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [pendingAchievements, setPendingAchievements] = useState<Achievement[]>([]);
-  const [pendingExhibitorRequests, setPendingExhibitorRequests] = useState<any[]>([]);
-  const [users, setUsers] = useState<{ exhibitors: any[]; collectors: any[] }>({ exhibitors: [], collectors: [] });
+  const [pendingExhibitorRequests, setPendingExhibitorRequests] = useState<PendingExhibitorRequest[]>([]);
+  const [users, setUsers] = useState<{ exhibitors: AdminUserRow[]; collectors: AdminUserRow[] }>({ exhibitors: [], collectors: [] });
   const [loading, setLoading] = useState(false);
   const [notifTitle, setNotifTitle] = useState('');
   const [notifMessage, setNotifMessage] = useState('');
@@ -194,7 +194,7 @@ export default function AdminDashboard({ user, token, setUser, onLogout }: Admin
       <Sidebar
         tabs={adminTabs}
         activeTab={activeTab}
-        onTabChange={(tab) => setActiveTab(tab as any)}
+        onTabChange={(tab) => setActiveTab(tab as AdminTab)}
         user={user}
         onLogout={onLogout}
       />

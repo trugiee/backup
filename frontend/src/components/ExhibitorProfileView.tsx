@@ -36,7 +36,7 @@ interface Artwork {
   description?: string;
   yearCreated?: number;
   style?: string;
-  attributes?: Record<string, any>;
+  attributes?: Record<string, string | number>;
 }
 
 interface ExhibitorProfileViewProps {
@@ -92,7 +92,7 @@ export default function ExhibitorProfileView({
 }: ExhibitorProfileViewProps) {
   const [fetched, setFetched] = useState<typeof initialData | null>(initialData || null);
   const [loading, setLoading] = useState(!initialData && !!exhibitorId);
-  const [selectedArtwork, setSelectedArtwork] = useState<any>(null);
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null);
 
   useEffect(() => {
     if (!exhibitorId || initialData) return;

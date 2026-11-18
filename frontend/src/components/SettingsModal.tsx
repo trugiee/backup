@@ -88,7 +88,9 @@ export default function SettingsModal({ user, token, setUser, onClose }: Setting
         const data = await res.json();
         if (data.phone) setPhone(data.phone);
         if (data.address) setAddress(data.address);
-      } catch {}
+      } catch {
+      // ignored: failure here is non-critical
+    }
     };
     fetchExtra();
   }, []);

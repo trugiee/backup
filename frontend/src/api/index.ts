@@ -169,7 +169,9 @@ export function fetchAdminUsers(token: string): Promise<{ exhibitors: AdminUserR
   return fetchJson(`${BASE}/admin/users`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchPendingExhibitorRequests(token: string): Promise<(Exhibitor & { phone?: string; address?: string; createdAt: string })[]> {
+export type PendingExhibitorRequest = Exhibitor & { phone?: string; address?: string; createdAt: string };
+
+export function fetchPendingExhibitorRequests(token: string): Promise<PendingExhibitorRequest[]> {
   return fetchJson(`${BASE}/admin/exhibitors/pending`, { headers: getAuthHeaders(token) });
 }
 
@@ -272,7 +274,13 @@ export function fetchInbox(token: string): Promise<InboxThread[]> {
   return fetchJson(`${BASE}/messages/inbox`, { headers: getAuthHeaders(token) });
 }
 
-export function fetchMyConversations(token: string): Promise<Message[]> {
+export interface ConversationThread {
+  exhibitor: NonNullable<Message['exhibitor']>;
+  lastMessage: Message;
+  messages: Message[];
+}
+
+export function fetchMyConversations(token: string): Promise<ConversationThread[]> {
   return fetchJson(`${BASE}/messages/my-conversations`, { headers: getAuthHeaders(token) });
 }
 

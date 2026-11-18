@@ -38,9 +38,5 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - run: npm ci
-      - name: Lint (informational for now)
-        # The codebase has existing lint errors; tighten this by removing
-        # continue-on-error once they are cleaned up.
-        run: npm run lint
-        continue-on-error: true
+      - run: npm run lint
       - run: npm run build

@@ -48,7 +48,7 @@ export default function ArtworkModal({ artwork, onClose, token, user, onSignIn }
         user={user!}
         exhibitorId={artwork.exhibitor!.id}
         exhibitorName={artwork.exhibitor!.name}
-        exhibitorAvatar={(artwork.exhibitor as any)?.profilePicture}
+        exhibitorAvatar={artwork.exhibitor?.profilePicture}
         artworkId={artwork.id}
         artworkType={artwork.type}
         artworkImageUrl={mediaItems[0]?.url || artwork.imageUrl}

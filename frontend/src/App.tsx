@@ -46,9 +46,9 @@ export default function App() {
       if (res.artwork) toast('Payment successful! Your artwork is now live.', 'success');
       localStorage.removeItem('ggallery_pending_artwork');
       localStorage.removeItem('ggallery_pending_payment_id');
-    } catch (err: any) {
+    } catch (err) {
       console.error('confirmAndCreateArtwork error:', err);
-      toast('Payment confirmed but artwork creation failed: ' + (err.message || 'Unknown error') + '. Your draft is saved.', 'error');
+      toast('Payment confirmed but artwork creation failed: ' + ((err instanceof Error && err.message) || 'Unknown error') + '. Your draft is saved.', 'error');
     } finally {
       processingPayment.current = false;
     }

@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import type { Artwork, User, Achievement, Message, Notification } from '../types';
 import { fetchMyArtworks, deleteArtwork, updateArtwork, fetchMyAchievements, deleteAchievement, uploadImage, updateExhibitor, fetchInbox, replyMessage, fetchNotifications, fetchExhibitorStats } from '../api';
-import type { ExhibitorStats } from '../api';
+import type { ExhibitorStats, InboxThread } from '../api';
 import { useToast } from '../components/Toast';
 import { useConfirm } from '../components/ConfirmDialog';
 import ArtworkCard from '../components/ArtworkCard';
@@ -50,7 +50,7 @@ export default function ExhibitorDashboard({
   const [savingBio, setSavingBio] = useState(false);
   const [viewingProfilePic, setViewingProfilePic] = useState(false);
   const [showPublicProfile, setShowPublicProfile] = useState(false);
-  const [viewingCollectorProfile, setViewingCollectorProfile] = useState<any | null>(null);
+  const [viewingCollectorProfile, setViewingCollectorProfile] = useState<InboxThread['collector'] | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showDashboardMenu, setShowDashboardMenu] = useState(false);
   const dashboardLabelRef = useRef<HTMLDivElement>(null);
@@ -71,16 +71,16 @@ export default function ExhibitorDashboard({
     ));
   };
 
-  const [inbox, setInbox] = useState<any[]>([]);
-  const [activeThread, setActiveThread] = useState<{ collector: any; messages: Message[] } | null>(null);
+  const [inbox, setInbox] = useState<InboxThread[]>([]);
+  const [activeThread, setActiveThread] = useState<{ collector: InboxThread['collector']; messages: Message[] } | null>(null);
 
   const loadInbox = async () => {
     try {
       const data = await fetchInbox(token);
       setInbox(data);
-      setActiveThread((prev: any) => {
+      setActiveThread((prev) => {
         if (!prev) return prev;
-        const thread = data.find((t: any) => t.collector.id === prev.collector.id);
+        const thread = data.find((t) => t.collector.id === prev.collector.id);
         if (thread) {
           const sorted = [...(thread.messages || [])].sort(
             (a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -89,11 +89,13 @@ export default function ExhibitorDashboard({
         }
         return prev;
       });
-    } catch {}
+    } catch {
+      // ignored: failure here is non-critical
+    }
   };
 
-  const openThread = async (collector: any) => {
-    const thread = inbox.find((t: any) => t.collector.id === collector.id);
+  const openThread = async (collector: InboxThread['collector']) => {
+    const thread = inbox.find((t) => t.collector.id === collector.id);
     if (thread) {
       const sorted = [...(thread.messages || [])].sort(
         (a: Message, b: Message) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -202,7 +204,9 @@ export default function ExhibitorDashboard({
     try {
       await deleteArtwork(token, id);
       fetchDashboardData();
-    } catch {}
+    } catch {
+      // ignored: failure here is non-critical
+    }
   };
 
   const handleMarkAsSold = async (id: string) => {
@@ -211,7 +215,9 @@ export default function ExhibitorDashboard({
     try {
       await updateArtwork(token, id, { status: 'Sold' });
       fetchDashboardData();
-    } catch {}
+    } catch {
+      // ignored: failure here is non-critical
+    }
   };
 
   const handleDeleteAchievement = async (id: string) => {
@@ -220,7 +226,9 @@ export default function ExhibitorDashboard({
     try {
       await deleteAchievement(token, id);
       fetchDashboardData();
-    } catch {}
+    } catch {
+      // ignored: failure here is non-critical
+    }
   };
 
   const mobileNavRef = useRef<HTMLDivElement>(null);
@@ -250,7 +258,7 @@ export default function ExhibitorDashboard({
       <Sidebar
         tabs={exhibitorTabs}
         activeTab={dashboardTab}
-        onTabChange={(tab) => { if (tab === 'messages') loadInbox(); setDashboardTab(tab as any); }}
+        onTabChange={(tab) => { if (tab === 'messages') loadInbox(); setDashboardTab(tab as typeof dashboardTab); }}
         user={user}
         onLogout={onLogout}
         unreadCount={unreadCount}

@@ -10,6 +10,7 @@ import {
   fetchMyConversations,
   fetchNotifications
 } from '../api';
+import type { ConversationThread } from '../api';
 import ArtworkModal from '../components/ArtworkModal';
 import ChatDrawer from '../components/ChatDrawer';
 import Sidebar from '../components/Sidebar';
@@ -63,13 +64,13 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
   // Exhibitor Prompt
   const [showExhibitorPrompt, setShowExhibitorPrompt] = useState(false);
   const [showExhibitorForm, setShowExhibitorForm] = useState(false);
-  const [upgradePhone, setUpgradePhone] = useState((user as any).phone || '');
-  const [upgradeAddress, setUpgradeAddress] = useState((user as any).address || '');
+  const [upgradePhone, setUpgradePhone] = useState(user.phone || '');
+  const [upgradeAddress, setUpgradeAddress] = useState(user.address || '');
   const [isUpgrading, setIsUpgrading] = useState(false);
 
   // Messages
-  const [conversations, setConversations] = useState<any[]>([]);
-  const [activeThread, setActiveThread] = useState<any | null>(null);
+  const [conversations, setConversations] = useState<ConversationThread[]>([]);
+  const [activeThread, setActiveThread] = useState<ConversationThread | null>(null);
 
   // Notifications
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -88,7 +89,9 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
     try {
       const data = await fetchMyConversations(token);
       setConversations(data);
-    } catch {}
+    } catch {
+      // ignored: failure here is non-critical
+    }
   };
 
   const fetchAllData = async () => {
@@ -172,7 +175,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
       <Sidebar
         tabs={collectorTabs}
         activeTab={dashboardTab}
-        onTabChange={(tab) => { if (tab === 'messages') loadConversations(); setDashboardTab(tab as any); }}
+        onTabChange={(tab) => { if (tab === 'messages') loadConversations(); setDashboardTab(tab as DashboardTab); }}
         user={user}
         onLogout={onLogout}
         unreadCount={unreadNotifs.length}
@@ -224,7 +227,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
                 </button>
               ) : (
                 <button
-                  onClick={() => { user.isPendingExhibitor ? toast('Your exhibitor request is pending admin approval.', 'info') : setShowExhibitorPrompt(true); setShowDashboardMenu(false); }}
+                  onClick={() => { if (user.isPendingExhibitor) { toast('Your exhibitor request is pending admin approval.', 'info'); } else { setShowExhibitorPrompt(true); } setShowDashboardMenu(false); }}
                   className="flex items-center gap-2.5 w-full px-3 py-2 text-xs font-semibold text-amber-600 hover:bg-amber-50 dark:hover:bg-amber-950/30 transition-colors"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
@@ -483,7 +486,7 @@ export default function CollectorDashboard({ user, token, setUser, onLogout }: C
             ) : (
               <div className="space-y-2">
                 <h2 className="text-xs font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-4">Your Conversations</h2>
-                {conversations.map((thread: any) => (
+                {conversations.map((thread) => (
                   <button
                     key={thread.exhibitor.id}
                     onClick={() => setActiveThread(thread)}
