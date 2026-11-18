@@ -112,7 +112,7 @@ export default function AuthPage({ onAuth }: AuthPageProps) {
         }
         try {
           // id_token might not be returned, use access_token
-          const data = await fetch('/api/auth/google', {
+          const data = await fetch(`${import.meta.env.VITE_API_URL || '/api'}/auth/google`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ accessToken: response.access_token }),
