@@ -1,10 +1,13 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-COPY package*.json ./
 # multer-storage-cloudinary still declares a cloudinary v1 peer dependency while
-# the app uses v2, so a plain `npm ci` stops with ERESOLVE.
-RUN npm ci --legacy-peer-deps
+# the app uses v2, so npm stops with ERESOLVE. Apply the override to every npm
+# command in this stage (ci and prune both re-resolve the tree).
+ENV npm_config_legacy_peer_deps=true
+
+COPY package*.json ./
+RUN npm ci
 
 COPY prisma/ ./prisma/
 RUN npx prisma generate
@@ -13,7 +16,7 @@ COPY tsconfig.json ./
 COPY src/ ./src/
 RUN npx tsc
 
-RUN npm prune --production
+RUN npm prune --omit=dev
 
 FROM node:22-alpine AS runner
 WORKDIR /app
